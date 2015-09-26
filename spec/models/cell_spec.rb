@@ -6,7 +6,7 @@ describe Cell do
     expect(subject).to respond_to :position
   end
 
-  it 'should respond to occupied' do
+  it 'should respond to occupied?' do
     expect(subject).to respond_to :occupied?
   end
 end
