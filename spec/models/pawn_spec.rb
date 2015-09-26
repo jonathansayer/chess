@@ -2,11 +2,7 @@ require 'rails_helper'
 
 describe Pawn do
 
-  let(:subject){Pawn.create(position:'A2',
-                            move_limit:1,
-                            horizontal?: false,
-                            vertical?: true,
-                            diagonal?: true)}
+  let(:subject){Pawn.create(position:'A2')}
 
   it 'shoudl respond to move_forward with one argument' do
     expect(subject).to respond_to(:move_forward).with(1).argument
@@ -32,18 +28,21 @@ describe Pawn do
   end
 
   it 'should be able to move diagonally if that square is occupied' do
-    Cell.create(position: "B3", occupied?: true )
+    cell = double cell, position: 'B3', occupied?: true
+    allow(Cell).to receive(:find_by) {cell}
     subject.move_diagonally 'B3'
     expect(subject.position).to eq 'B3'
   end
 
   it 'should not be able to move diagonally twice to an occupied square' do
-    Cell.create(position: "C4", occupied?: true )
+    cell = double cell, position: 'C4', occupied?: true
+    allow(Cell).to receive(:find_by) {cell}
     expect{subject.move_diagonally 'C4'}.to raise_error "Invalid Move"
   end
 
   it 'should not be able to move diagonally if cell is not occupied' do
-    Cell.create(position: "B3", occupied?: false )
+    cell = double cell, position: 'B3', occupied?: false
+    allow(Cell).to receive(:find_by) {cell}
     expect{subject.move_diagonally 'B3'}.to raise_error "Invalid Move"
   end
 
