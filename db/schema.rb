@@ -25,8 +25,12 @@ ActiveRecord::Schema.define(version: 20150926103339) do
 
   create_table "pawns", force: :cascade do |t|
     t.string   "position"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "move_limit"
+    t.boolean  "horizontal?"
+    t.boolean  "vertical?"
+    t.boolean  "diagonal?"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
 end

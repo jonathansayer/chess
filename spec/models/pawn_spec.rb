@@ -2,6 +2,12 @@ require 'rails_helper'
 
 describe Pawn do
 
+  let(:subject){Pawn.create(position:'A2',
+                            move_limit:1,
+                            horizontal?: false,
+                            vertical?: true,
+                            diagonal?: true)}
+
   it 'should respond to move limit' do
     expect(subject).to respond_to :move_limit
   end
@@ -22,8 +28,20 @@ describe Pawn do
     expect(subject.direction).to eq 'forward'
   end
 
-  # it 'should be allowed to move forward diagonally when the cell is occupied.' do
-  #   subject = Pawn.create(position:'A2')
-  #   to_take_pawn = Pawn.create(position: "B3")
+  it 'should allow a pawn to move from A2 to A3' do
+    subject.move_forward
+    expect(subject.position).to eq 'A3'
+  end
+
+  it 'should be able to move from A2 to A4' do
+    subject.move_two_squares
+    expect(subject.position).to eq 'A4'
+  end
+
+  it 'should not be able to move from A3 to A5' do
+    subject.position = 'A3'
+    expect{subject.move_two_squares}.to raise_error "Invalid Move"
+  end
+
 
 end

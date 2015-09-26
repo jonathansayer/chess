@@ -9,5 +9,4 @@ describe Cell do
   it 'should respond to occupied' do
     expect(subject).to respond_to :occupied?
   end
-  
 end
