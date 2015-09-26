@@ -21,4 +21,13 @@ class Pawn < ActiveRecord::Base
     self.position = new_position
   end
 
+  def move_diagonally new_position
+    coords = ConvertCoordinates.convert_to_numercal_coords position
+    new_coords = ConvertCoordinates.convert_to_numercal_coords new_position
+    raise "Invalid Move" if (new_coords[1] - coords[1]) > 1 or (coords[1] - new_coords[1]) > 1
+    coords = new_coords
+    new_position = ConvertCoordinates.convert_to_alphabetical_coords coords
+    self.position = new_position
+  end
+
 end

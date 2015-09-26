@@ -43,5 +43,16 @@ describe Pawn do
     expect{subject.move_two_squares}.to raise_error "Invalid Move"
   end
 
+  it 'should be able to move diagonally if that square is occupied' do
+    cell = double :cell,position:'B3', occupied?: true
+    subject.move_diagonally 'B3'
+    expect(subject.position).to eq 'B3'
+  end
+
+  it 'should not be able to move diagonally twice to an occupied square' do
+    cell = double :cell, position: 'C4', occupied?: true
+    expect{subject.move_diagonally 'C4'}.to raise_error "Invalid Move"
+  end
+
 
 end
