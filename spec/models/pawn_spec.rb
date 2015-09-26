@@ -4,7 +4,7 @@ describe Pawn do
 
   let(:subject){Pawn.create(position:'A2')}
 
-  it 'shoudl respond to move_forward with one argument' do
+  it 'should respond to move_forward with one argument' do
     expect(subject).to respond_to(:move_forward).with(1).argument
   end
 
