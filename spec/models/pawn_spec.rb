@@ -8,27 +8,23 @@ describe Pawn do
                             vertical?: true,
                             diagonal?: true)}
 
-  it 'shoudl respond to move_forward' do
-    expect(subject).to respond_to :move_forward
+  it 'shoudl respond to move_forward with one argument' do
+    expect(subject).to respond_to(:move_forward).with(1).argument
   end
 
   it 'should allow a pawn to move from A2 to A3' do
-    subject.move_forward
+    subject.move_forward 1
     expect(subject.position).to eq 'A3'
   end
 
-  it 'should respond to move_two_squares' do
-    expect(subject).to respond_to :move_two_squares
-  end
-
   it 'should be able to move from A2 to A4' do
-    subject.move_two_squares
+    subject.move_forward 2
     expect(subject.position).to eq 'A4'
   end
 
   it 'should not be able to move from A3 to A5' do
     subject.position = 'A3'
-    expect{subject.move_two_squares}.to raise_error "Invalid Move"
+    expect{subject.move_forward 2}.to raise_error "Invalid Move"
   end
 
   it 'should respond to move_diagonally' do
