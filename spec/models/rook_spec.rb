@@ -2,7 +2,9 @@ require 'rails_helper'
 
 describe Rook do
 
-  let(:subject){Rook.create(position:'A1')}
+  before(:each) do
+    subject.position = 'A1'
+  end
 
   it 'should respond to position' do
     expect(subject).to respond_to :position
