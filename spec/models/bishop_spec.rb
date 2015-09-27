@@ -31,10 +31,47 @@ describe Bishop do
       expect(subject.position).to eq 'E3'
     end
 
-    it 'should be able to move diagonally backwwards-left by 1(from D4 to C3)' do
+    it 'should be able to move diagonally backwards-left by 1(from D4 to C3)' do
       subject.move_to 'C3'
       expect(subject.position).to eq 'C3'
     end
+
+    it 'should not be able to move forward by one (from D4 to D5)' do
+      expect{subject.move_to 'D5'}.to raise_error "Invalid Move"
+    end
+
+    it 'should not be able to move backward by one (from D4 to D3)' do
+      expect{subject.move_to 'D3'}.to raise_error 'Invalid Move'
+    end
+
+    it 'should not be able to move to the right by one (from D4 to E4)' do
+      expect{subject.move_to 'E4'}.to raise_error 'Invalid Move'
+    end
+
+    it 'should not be able to move to the left by one (from D4 to C4)' do
+      expect{subject.move_to 'C4'}.to raise_error 'Invalid Move'
+    end
+
+    it 'should be able to move forward-right by any amounnt(from D4 to H8)' do
+      subject.move_to 'H8'
+      expect(subject.position).to eq 'H8'
+    end
+
+    it 'should be able to move forward-left by any amount (from D4 to A7)' do
+      subject.move_to 'A7'
+      expect(subject.position).to eq 'A7'
+    end
+
+    it 'should be able to move backward right by any amount (from D4 to G1)' do
+      subject.move_to 'G1'
+      expect(subject.position).to eq 'G1'
+    end
+
+    it 'should eb able to move backward left by any amount (from D4 to A1)' do
+      subject.move_to 'A1'
+      expect(subject.position).to eq 'A1'
+    end 
+
 
   end
 
