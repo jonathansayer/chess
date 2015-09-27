@@ -21,7 +21,7 @@ describe Queen do
 
   it 'should be able to move backward by one square (from D4 to D3)' do
     subject.move_to 'D3'
-    expect(subject.position).to eq'D3'
+    expect(subject.position).to eq 'D3'
   end
 
   it 'should be able to move to the right by one square (from D4 to C4)' do
