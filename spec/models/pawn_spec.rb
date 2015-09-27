@@ -2,48 +2,52 @@ require 'rails_helper'
 
 describe Pawn do
 
-  let(:subject){Pawn.create(position:'A2')}
+  before(:each) do
+    subject.position = 'D2'
+  end
 
   it 'should respond to move_forward with one argument' do
-    expect(subject).to respond_to(:move_forward).with(1).argument
+    expect(subject).to respond_to(:move_to).with(1).argument
   end
 
-  it 'should allow a pawn to move from A2 to A3' do
-    subject.move_forward 1
-    expect(subject.position).to eq 'A3'
+  it 'should allow a pawn to move from D2 to D3' do
+    cell = double cell, position: 'E3', occupied?: true
+    allow(Cell).to receive(:find_by) {cell}
+    subject.move_to 'D3'
+    expect(subject.position).to eq 'D3'
   end
 
-  it 'should be able to move from A2 to A4' do
-    subject.move_forward 2
-    expect(subject.position).to eq 'A4'
+  it 'should be able to move from D2 to D4' do
+    cell = double cell, position: 'E3', occupied?: true
+    allow(Cell).to receive(:find_by) {cell}
+    subject.move_to 'D4'
+    expect(subject.position).to eq 'D4'
   end
 
-  it 'should not be able to move from A3 to A5' do
-    subject.position = 'A3'
-    expect{subject.move_forward 2}.to raise_error "Invalid Move"
-  end
-
-  it 'should respond to move_diagonally' do
-    expect(subject).to respond_to :move_diagonally
+  it 'should not be able to move from D3 to D5' do
+    cell = double cell, position: 'E3', occupied?: true
+    allow(Cell).to receive(:find_by) {cell}
+    subject.position = 'D3'
+    expect{subject.move_to 'D5'}.to raise_error "Invalid Move"
   end
 
   it 'should be able to move diagonally if that square is occupied' do
-    cell = double cell, position: 'B3', occupied?: true
+    cell = double cell, position: 'E3', occupied?: true
     allow(Cell).to receive(:find_by) {cell}
-    subject.move_diagonally 'B3'
-    expect(subject.position).to eq 'B3'
+    subject.move_to 'E3'
+    expect(subject.position).to eq 'E3'
   end
 
   it 'should not be able to move diagonally twice to an occupied square' do
-    cell = double cell, position: 'C4', occupied?: true
+    cell = double cell, position: 'F4', occupied?: true
     allow(Cell).to receive(:find_by) {cell}
-    expect{subject.move_diagonally 'C4'}.to raise_error "Invalid Move"
+    expect{subject.move_to 'F4'}.to raise_error "Invalid Move"
   end
 
   it 'should not be able to move diagonally if cell is not occupied' do
-    cell = double cell, position: 'B3', occupied?: false
+    cell = double cell, position: 'E3', occupied?: false
     allow(Cell).to receive(:find_by) {cell}
-    expect{subject.move_diagonally 'B3'}.to raise_error "Invalid Move"
+    expect{subject.move_to 'E3'}.to raise_error "Invalid Move"
   end
 
 end

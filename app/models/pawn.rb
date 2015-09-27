@@ -1,25 +1,30 @@
 class Pawn < ActiveRecord::Base
 
-  def move_forward number
-    coords = ConvertCoordinates.convert_to_numercal_coords position
-    raise "Invalid Move" if coords[1] != 2 and number == 2
-    coords[1] += number
-    new_position = ConvertCoordinates.convert_to_alphabetical_coords coords
+  def move_to new_position
+    raise "Invalid Move" unless (vertical_move? new_position or diagonal_move? new_position)
     self.position = new_position
   end
 
-  def move_diagonally new_position
-    @coords = ConvertCoordinates.convert_to_numercal_coords position
-    @new_coords = ConvertCoordinates.convert_to_numercal_coords new_position
-    raise_error_if_invalid new_position
-    self.position = ConvertCoordinates.convert_to_alphabetical_coords @new_coords
-  end
-
   private
-
-  def raise_error_if_invalid new_position
-    raise 'Invalid Move' if (@new_coords[1] - @coords[1]) > 1 or (@coords[1] - @new_coords[1]) > 1
-    raise 'Invalid Move' if Cell.find_by(position: new_position).occupied? == false
+  
+  def vertical_move? new_position
+    current_coords = ConvertCoordinates.convert_to_numercal_coords self.position
+    new_coords = ConvertCoordinates.convert_to_numercal_coords new_position
+    return false if new_coords[1] - current_coords[1] > move_limit
+    return new_coords[0] == current_coords[0]
   end
 
+  def move_limit
+    current_coords =  ConvertCoordinates.convert_to_numercal_coords self.position
+    return 2 if current_coords[1] == 2
+    return 1
+  end
+
+  def diagonal_move? new_position
+    current_coords = ConvertCoordinates.convert_to_numercal_coords self.position
+    new_coords = ConvertCoordinates.convert_to_numercal_coords new_position
+    return false if new_coords[0] - current_coords[0] > 1
+    return false if Cell.find_by(position: new_position).occupied? == false
+    return ((current_coords[0] - new_coords[0]).abs == (current_coords[1] - new_coords[1]).abs)
+  end
 end
