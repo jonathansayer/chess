@@ -52,7 +52,31 @@ describe Queen do
   it 'should be able to move diagonally backward-left by one (from D4 to C3)' do
     subject.move_to 'C3'
     expect(subject.position).to eq 'C3'
-  end 
+  end
+
+  context 'when trying to make an invalid move' do
+
+    it "should not be allowed to move to E6 from D4" do
+      expect{subject.move_to 'E6'}.to raise_error 'Invalid Move'
+    end
+
+    it "should not be allowd to move to F5 from D4" do
+      expect{subject.move_to 'F5'}.to raise_error "Invalid Move"
+    end
+
+    it "should not be allowed to move to F3 from D4" do
+      expect{subject.move_to 'F3'}.to raise_error "Invalid Move"
+    end
+
+    it "should not be allowed to move to B5 from D4" do
+      expect{subject.move_to 'B5'}.to raise_error "Invalid Move"
+    end
+
+    it 'should not be allowed to move to H6 from D4' do
+      expect{subject.move_to 'H6'}.to raise_error "Invalid Move"
+    end
+
+  end
 
 
 end
