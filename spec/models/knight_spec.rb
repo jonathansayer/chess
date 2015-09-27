@@ -39,6 +39,11 @@ describe Knight do
     expect(subject.position).to eq 'C6'
   end
 
-  
+  context "when trying to make an invalid move" do
+
+    it 'should not be able to move from D4 to E4' do
+      expect{subject.move_to 'E4'}.to raise_error 'Invalid Move'
+    end
+  end
 
 end
