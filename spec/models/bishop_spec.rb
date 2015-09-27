@@ -2,6 +2,10 @@ require 'rails_helper'
 
 describe Bishop do
 
+  before(:each) do
+    subject.position = 'D4'
+  end
+
   it 'should respond to position' do
     expect(subject).to respond_to :position
   end
@@ -10,11 +14,7 @@ describe Bishop do
     expect(subject).to respond_to(:move_to).with(1).argument
   end
 
-  context "when moving diagonally" do
-
-    before(:each) do
-      subject.position = 'D4'
-    end
+  context "when moving diagonally by one" do
 
     it 'should be able to move diagonally forward-right by 1(from D4 to E5)' do
       subject.move_to 'E5'
@@ -35,6 +35,9 @@ describe Bishop do
       subject.move_to 'C3'
       expect(subject.position).to eq 'C3'
     end
+  end
+
+  context 'when making invalid moves' do
 
     it 'should not be able to move forward by one (from D4 to D5)' do
       expect{subject.move_to 'D5'}.to raise_error "Invalid Move"
@@ -51,6 +54,9 @@ describe Bishop do
     it 'should not be able to move to the left by one (from D4 to C4)' do
       expect{subject.move_to 'C4'}.to raise_error 'Invalid Move'
     end
+  end
+
+  context 'when moving diagonally with no limits' do
 
     it 'should be able to move forward-right by any amounnt(from D4 to H8)' do
       subject.move_to 'H8'
@@ -70,9 +76,7 @@ describe Bishop do
     it 'should eb able to move backward left by any amount (from D4 to A1)' do
       subject.move_to 'A1'
       expect(subject.position).to eq 'A1'
-    end 
-
-
+    end
   end
 
 end
