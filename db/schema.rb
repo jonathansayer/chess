@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150927191054) do
+ActiveRecord::Schema.define(version: 20150928085941) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,24 @@ ActiveRecord::Schema.define(version: 20150927191054) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "boards", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "king_id"
+    t.integer  "queen_id"
+    t.integer  "bishop_id"
+    t.integer  "knight_id"
+    t.integer  "rook_id"
+    t.integer  "pawn_id"
+  end
+
+  add_index "boards", ["bishop_id"], name: "index_boards_on_bishop_id", using: :btree
+  add_index "boards", ["king_id"], name: "index_boards_on_king_id", using: :btree
+  add_index "boards", ["knight_id"], name: "index_boards_on_knight_id", using: :btree
+  add_index "boards", ["pawn_id"], name: "index_boards_on_pawn_id", using: :btree
+  add_index "boards", ["queen_id"], name: "index_boards_on_queen_id", using: :btree
+  add_index "boards", ["rook_id"], name: "index_boards_on_rook_id", using: :btree
 
   create_table "cells", force: :cascade do |t|
     t.string   "position"
@@ -43,12 +61,8 @@ ActiveRecord::Schema.define(version: 20150927191054) do
 
   create_table "pawns", force: :cascade do |t|
     t.string   "position"
-    t.integer  "move_limit"
-    t.boolean  "horizontal?"
-    t.boolean  "vertical?"
-    t.boolean  "diagonal?"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "queens", force: :cascade do |t|
@@ -63,4 +77,10 @@ ActiveRecord::Schema.define(version: 20150927191054) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "boards", "bishops"
+  add_foreign_key "boards", "kings"
+  add_foreign_key "boards", "knights"
+  add_foreign_key "boards", "pawns"
+  add_foreign_key "boards", "queens"
+  add_foreign_key "boards", "rooks"
 end
