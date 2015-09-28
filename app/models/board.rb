@@ -13,7 +13,6 @@ class Board < ActiveRecord::Base
     to_cell = Cell.find_by(position: new_position)
     to_cell.change_occupied_mode
     from_cell = Cell.find_by(position: old_position)
-    p from_cell
     from_cell.change_occupied_mode
   end
 
