@@ -8,6 +8,7 @@ describe Board do
 
   it 'should call the move_to method for the piece' do
     pawn = double :pawn
+    allow(pawn).to receive(:position)
     cell = double :cell
     cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
     allow(cell_class).to receive(:find_by) {cell}
@@ -18,11 +19,30 @@ describe Board do
 
   it 'should change the occupied state of the Cell that the piece moves to' do
     pawn = double :pawn
+    allow(pawn).to receive(:position) {'D4'}
     allow(pawn).to receive(:move_to)
-    cell = double :cell
+    to_cell = double :to_cell
+    from_cell = double :from_cell
+    allow(from_cell).to receive(:change_occupied_mode)
     cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
-    allow(cell_class).to receive(:find_by) {cell}
-    expect(cell).to receive(:change_occupied_mode)
+    allow(cell_class).to receive(:find_by).with({:position=>"D5"}){to_cell}
+    allow(cell_class).to receive(:find_by).with({:position=>"D4"}) {from_cell}
+    expect(to_cell).to receive(:change_occupied_mode)
+    subject.move_piece pawn, 'D5'
+  end
+
+  it 'should change the occupied state of the Cell that the piece move away from' do
+    pawn = double :pawn
+    allow(pawn).to receive(:position) {'D4'}
+    allow(pawn).to receive(:move_to)
+    to_cell = double :to_cell
+    cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
+    allow(cell_class).to receive(:find_by).with({:position=>"D5"}) {to_cell}
+    to_cell = double :to_cell
+    from_cell = double :from_cell
+    allow(cell_class).to receive(:find_by).with({:position=>"D4"}) {from_cell}
+    allow(to_cell).to receive(:change_occupied_mode)
+    expect(from_cell).to receive(:change_occupied_mode)
     subject.move_piece pawn, 'D5'
   end
 
