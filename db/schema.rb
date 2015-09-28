@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150928095741) do
+ActiveRecord::Schema.define(version: 20150928100628) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,9 +31,11 @@ ActiveRecord::Schema.define(version: 20150928095741) do
     t.integer  "bishop_id"
     t.integer  "knight_id"
     t.integer  "rook_id"
+    t.integer  "cell_id"
   end
 
   add_index "boards", ["bishop_id"], name: "index_boards_on_bishop_id", using: :btree
+  add_index "boards", ["cell_id"], name: "index_boards_on_cell_id", using: :btree
   add_index "boards", ["king_id"], name: "index_boards_on_king_id", using: :btree
   add_index "boards", ["knight_id"], name: "index_boards_on_knight_id", using: :btree
   add_index "boards", ["pawn_id"], name: "index_boards_on_pawn_id", using: :btree
@@ -78,6 +80,7 @@ ActiveRecord::Schema.define(version: 20150928095741) do
   end
 
   add_foreign_key "boards", "bishops"
+  add_foreign_key "boards", "cells"
   add_foreign_key "boards", "kings"
   add_foreign_key "boards", "knights"
   add_foreign_key "boards", "pawns"

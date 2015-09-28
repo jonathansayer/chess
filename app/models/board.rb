@@ -5,4 +5,5 @@ class Board < ActiveRecord::Base
   has_many :knights
   has_many :kings
   has_many :queens
+  has_many :cells
 end
