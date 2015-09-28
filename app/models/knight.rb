@@ -1,4 +1,5 @@
 class Knight < ActiveRecord::Base
+  belongs_to :board
 
   def move_to new_position
     raise 'Invalid Move' unless valid_move? new_position

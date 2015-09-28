@@ -1,4 +1,5 @@
 class Pawn < ActiveRecord::Base
+  belongs_to :board
 
   def move_to new_position
     raise "Invalid Move" unless (vertical_move? new_position or diagonal_move? new_position)
@@ -6,7 +7,7 @@ class Pawn < ActiveRecord::Base
   end
 
   private
-  
+
   def vertical_move? new_position
     current_coords = ConvertCoordinates.convert_to_numercal_coords self.position
     new_coords = ConvertCoordinates.convert_to_numercal_coords new_position

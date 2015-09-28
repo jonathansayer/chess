@@ -1,4 +1,5 @@
 class Bishop < ActiveRecord::Base
+  belongs_to :board
 
   def move_to new_position
     raise 'Invalid Move' unless diagonal_move? new_position

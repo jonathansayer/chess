@@ -1,4 +1,5 @@
 class Queen < ActiveRecord::Base
+  belongs_to :board
 
   def move_to new_position
     raise "Invalid Move" unless horizonatal_move? new_position or vertical_move? new_position or diagonal_move? new_position
@@ -24,5 +25,5 @@ class Queen < ActiveRecord::Base
       new_coords = ConvertCoordinates.convert_to_numercal_coords new_position
       return ((current_coords[0] - new_coords[0]).abs == (current_coords[1] - new_coords[1]).abs)
     end
-    
+
 end

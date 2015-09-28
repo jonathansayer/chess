@@ -1,4 +1,5 @@
 class Rook < ActiveRecord::Base
+  belongs_to :board
 
   def move_to new_position
     raise "Invalid Move" unless horizonatal_move? new_position or vertical_move? new_position

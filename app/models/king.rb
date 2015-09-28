@@ -1,4 +1,5 @@
 class King < ActiveRecord::Base
+  belongs_to :board
 
   def move_to new_position
     raise "Invalid Move" unless horizonatal_move? new_position or vertical_move? new_position or diagonal_move? new_position
