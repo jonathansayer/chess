@@ -1,4 +1,4 @@
-class AddKnightIdToBoard < ActiveRecord::Migration
+class AddKnightsToBoard < ActiveRecord::Migration
   def change
     add_reference :boards, :knight, index: true, foreign_key: true
   end
