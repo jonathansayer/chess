@@ -9,5 +9,8 @@ class Board < ActiveRecord::Base
 
   def move_piece piece, new_position
     piece.move_to new_position
+    cell = Cell.find_by(position: new_position)
+    cell.change_occupied_mode
   end
+
 end
