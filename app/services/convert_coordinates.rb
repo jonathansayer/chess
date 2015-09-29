@@ -10,17 +10,26 @@ class ConvertCoordinates
                       'H' => 8
                       }
 
-  def self.convert_to_numercal_coords position
+  def self.convert_to_numercal_coords *positions
     coordinates = []
-    split_position = position.split(//)
-    x = @conversion_hash[split_position.first]
-    y = split_position.last.to_i
-    coordinates.push(x,y)
+    positions.each do |position|
+      split_position = position.split(//)
+      x = @conversion_hash[split_position.first]
+      y = split_position.last.to_i
+      coordinates.push([x,y])
+    end
+    return coordinates.first if coordinates.length == 1
+    coordinates
   end
 
-  def self.convert_to_alphabetical_coords coords
-    self.convert_first_number_to_letter coords
-    @letter + coords.last.to_s
+  def self.convert_to_alphabetical_coords *coords
+    position_array = []
+    coords.each do |coordinate|
+      self.convert_first_number_to_letter coordinate
+        position_array.push(@letter + coordinate.last.to_s)
+      end
+      return position_array.first if position_array.length == 1
+      position_array
   end
 
   private

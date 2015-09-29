@@ -20,6 +20,9 @@ describe Rook do
   end
 
   it 'should be able to move forward more than one cell' do
+    cell = double :cell, occupied?: false
+    cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
+    allow(cell_class).to receive(:find_by) {cell}
     subject.move_to 'A8'
     expect(subject.position).to eq 'A8'
   end
@@ -30,7 +33,7 @@ describe Rook do
     expect(subject.position).to eq 'A7'
   end
 
-  it 'should be able to move backward more than one space' do
+  it 'should be able to move backward more than one cell' do
     subject.position = 'A8'
     subject.move_to 'A1'
     expect(subject.position).to eq 'A1'
@@ -48,6 +51,15 @@ describe Rook do
   it 'should be able to move horizontally multiple cells' do
     subject.move_to 'H1'
     expect(subject.position).to eq 'H1'
+  end
+
+  it 'should not be able to continue moving horizontally once take a piece' do
+    from_cell = double :from_cell, positions: 'A1', occupied?: true
+    occupied_cell = double :occupied_cell, position: 'A2', occupied?: true
+    cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
+    allow(cell_class).to receive(:find_by).with({:position=>"A1"}){occupied_cell}
+    allow(cell_class).to receive(:find_by).with({:position=>"A2"}){occupied_cell}
+    expect{subject.move_to 'A4'}.to raise_error "Invalid Move"
   end
 
 end

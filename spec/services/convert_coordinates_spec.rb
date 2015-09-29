@@ -32,4 +32,12 @@ describe ConvertCoordinates do
     expect(subject.convert_to_alphabetical_coords [7,2]).to eq 'G2'
   end
 
+  it 'should take a range of coordintes and return a range of position' do
+    expect(subject.convert_to_alphabetical_coords [1,1],[2,2]).to eq ['A1','B2']
+  end
+
+  it 'should be able to take a range of positions and convert them to an array of coords' do
+    expect(subject.convert_to_numercal_coords 'A1', 'B2').to eq [[1,1],[2,2]]
+  end
+
 end
