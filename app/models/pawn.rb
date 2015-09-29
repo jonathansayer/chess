@@ -11,7 +11,7 @@ class Pawn < ActiveRecord::Base
   def invalid_move? new_position
     convert_to_and_from_coordinates new_position
     return true unless (vertical_move? new_position or diagonal_move? new_position)
-    return true if cell_infront_occupied? new_position
+    return true if cell_infront_occupied? new_position and !diagonal_move? new_position
   end
 
   def convert_to_and_from_coordinates new_position
