@@ -20,8 +20,10 @@ describe Pawn do
 
   it 'should be able to move from D2 to D4' do
     to_cell = double :cell, position: 'D4', occupied?: false
+    in_between_cell = double :cell, position:'D3', occupied?: false
     cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
     allow(cell_class).to receive(:find_by).with({:position => 'D4'}) {to_cell}
+    allow(cell_class).to receive(:find_by).with({:position => 'D3'}){in_between_cell}
     subject.move_to 'D4'
     expect(subject.position).to eq 'D4'
   end
@@ -35,9 +37,11 @@ describe Pawn do
   end
 
   it 'should be able to move diagonally if that square is occupied' do
-    cell = double :cell, position: 'E3', occupied?: true
+    to_cell = double :cell, position: 'E3', occupied?: true
+    in_between_cell = double :cell, position:'D3', occupied?: false
     cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
-    allow(cell_class).to receive(:find_by) {cell}
+    allow(cell_class).to receive(:find_by).with({:position => 'E3'}) {to_cell}
+    allow(cell_class).to receive(:find_by).with({:position => 'D3'}) {in_between_cell}
     subject.move_to 'E3'
     expect(subject.position).to eq 'E3'
   end
@@ -63,5 +67,23 @@ describe Pawn do
     allow(cell_class).to receive(:find_by){cell}
     expect{subject.move_to 'D3'}.to raise_error "Invalid Move"
   end
+
+  it 'should not be able to move two spaces if the cell directly infront is occupied' do
+    to_cell = double :cell, position: 'D4', occupied?: false
+    in_between_cell = double :cell, position:'D3', occupied?: true
+    cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
+    allow(cell_class).to receive(:find_by).with({:position => 'D4'}){to_cell}
+    allow(cell_class).to receive(:find_by).with({:position => 'D3'}){in_between_cell}
+    expect{subject.move_to 'D4'}.to raise_error "Invalid Move"
+  end
+
+  it 'should not be able to move two spaces if that space is occupied' do
+    to_cell = double :cell, position: 'D4', occupied?: true
+    in_between_cell = double :cell, position:'D3', occupied?: false
+    cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
+    allow(cell_class).to receive(:find_by).with({:position => 'D4'}){to_cell}
+    allow(cell_class).to receive(:find_by).with({:position => 'D3'}){in_between_cell}
+    expect{subject.move_to 'D4'}.to raise_error "Invalid Move"
+  end 
 
 end

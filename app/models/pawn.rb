@@ -3,7 +3,7 @@ class Pawn < ActiveRecord::Base
 
   def move_to new_position
     raise "Invalid Move" unless (vertical_move? new_position or diagonal_move? new_position)
-    raise "Invalid Move" if invalid_move? new_position
+    raise "Invalid Move" if cell_infront_occupied? new_position
     self.position = new_position
   end
 
@@ -30,9 +30,11 @@ class Pawn < ActiveRecord::Base
     return ((current_coords[0] - new_coords[0]).abs == (current_coords[1] - new_coords[1]).abs)
   end
 
-  def invalid_move? new_position
-    return (Cell.find_by(position: new_position).occupied? and vertical_move? new_position)
-    return false
+  def cell_infront_occupied? new_position
+    current_coords = ConvertCoordinates.convert_to_numercal_coords self.position
+    cell_in_front_position = ConvertCoordinates.convert_to_alphabetical_coords [current_coords[0], current_coords[1]+1]
+    return true if Cell.find_by(position: cell_in_front_position).occupied?
+    return true if Cell.find_by(position: new_position).occupied? and vertical_move? new_position
   end
 
 end
