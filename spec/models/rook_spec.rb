@@ -49,17 +49,26 @@ describe Rook do
   end
 
   it 'should be able to move horizontally multiple cells' do
+    empty_cell = double :empty_cell, occupied?: false
+    cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
+    allow(cell_class).to receive(:find_by){empty_cell}
     subject.move_to 'H1'
     expect(subject.position).to eq 'H1'
   end
 
-  it 'should not be able to continue moving horizontally once take a piece' do
-    from_cell = double :from_cell, positions: 'A1', occupied?: true
+  it 'should not be able to continue moving vertically once take a piece' do
     occupied_cell = double :occupied_cell, position: 'A2', occupied?: true
     cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
-    allow(cell_class).to receive(:find_by).with({:position=>"A1"}){occupied_cell}
     allow(cell_class).to receive(:find_by).with({:position=>"A2"}){occupied_cell}
     expect{subject.move_to 'A4'}.to raise_error "Invalid Move"
   end
+
+  it 'should not be able to continue moving horizonatally once taken a piece' do
+    occupied_cell = double :occupied_cell, position: 'B1', occupied?: true
+    cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
+    allow(cell_class).to receive(:find_by).with({:position=>"B1"}){occupied_cell}
+    expect{subject.move_to 'C1'}.to raise_error "Invalid Move"
+  end
+
 
 end
