@@ -138,7 +138,6 @@ describe Queen do
     end
 
     it 'should not be allowed to move through a piece when moving diagonally forward-left' do
-
       occupied_cell = double :cell, position: 'C5', occupied?: true
       cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
       allow(cell_class).to receive(:find_by).with({:position => 'D4'}) {from_cell}
@@ -147,7 +146,6 @@ describe Queen do
     end
 
     it 'should not be allowed to move through a piece when moving diagonally backward-right' do
-
       occupied_cell = double :cell, position: 'E3', occupied?: true
       cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
       allow(cell_class).to receive(:find_by).with({:position => 'D4'}) {from_cell}
@@ -156,12 +154,11 @@ describe Queen do
     end
 
     it 'should not be allowed to move through a piece when moving diagonally backward-left' do
-
       occupied_cell = double :cell, position: 'C3', occupied?: true
       cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
       allow(cell_class).to receive(:find_by).with({:position => 'D4'}) {from_cell}
       allow(cell_class).to receive(:find_by).with({:position => 'C3'}) {occupied_cell}
-      expect{subject.move_to 'B2  '}.to raise_error 'Invalid Move'
+      expect{subject.move_to 'B2'}.to raise_error 'Invalid Move'
     end
   end
 
