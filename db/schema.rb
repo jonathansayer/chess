@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150928100628) do
+ActiveRecord::Schema.define(version: 20150930142917) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20150928100628) do
     t.string   "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean  "white?"
   end
 
   create_table "boards", force: :cascade do |t|
@@ -53,30 +54,35 @@ ActiveRecord::Schema.define(version: 20150928100628) do
     t.string   "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean  "white?"
   end
 
   create_table "knights", force: :cascade do |t|
     t.string   "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean  "white?"
   end
 
   create_table "pawns", force: :cascade do |t|
     t.string   "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean  "white?"
   end
 
   create_table "queens", force: :cascade do |t|
     t.string   "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean  "white?"
   end
 
   create_table "rooks", force: :cascade do |t|
     t.string   "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean  "white?"
   end
 
   add_foreign_key "boards", "bishops"

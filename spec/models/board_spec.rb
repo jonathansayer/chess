@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe Board do
 
-  let(:pawn){double :pawn, position: 'D4'}
+  let(:pawn){double :pawn, position: 'D4', white?: true}
   let(:to_cell){double :to_cell, occupied?: false}
   let(:from_cell){double :from_cell}
 
@@ -44,7 +44,7 @@ describe Board do
     context 'occupied cell' do
 
       let(:to_cell){double :to_cell, occupied?: true, position: 'E5'}
-      let(:pawn2){double :pawn2, position:'E5'}
+      let(:pawn2){double :pawn2, position:'E5', white?: false}
 
       before(:each) do
         allow(pawn).to receive(:move_to)
@@ -53,21 +53,28 @@ describe Board do
         allow(cell_class).to receive(:find_by).with({:position=>"E5"}){to_cell}
         allow(cell_class).to receive(:find_by).with({:position=>"D4"}){from_cell}
         pawn_class = class_double('Pawn').as_stubbed_const(:transfer_nested_constants => true)
-        allow(pawn_class).to receive(:exists?).with({:position=>"E5"}){true}
-        allow(pawn_class).to receive(:where).with({:position=>"E5"}){[pawn2]}
+        allow(pawn_class).to receive(:exists?).with({:position=>"E5", white?: false}){true}
+        allow(pawn_class).to receive(:where).with({:position=>"E5", white?: false}){[pawn2]}
 
       end
 
 
-    it 'should be able to move to a cell which is already occupied and cell shoudl still be occupied' do
+    it 'should be able to move to a cell which is already occupied and cell should still be occupied' do
       allow(pawn2).to receive(:update_column).with("position", "Off Board")
       expect(to_cell).not_to receive(:change_occupied_mode)
       subject.move_piece pawn, 'E5'
     end
 
-    it 'should be able to move a piece off that board when another piece moves to that cell' do
+    it 'should be able to move a piece of the opposite colour off that board when another piece moves to that cell' do
       expect(pawn2).to receive(:update_column).with("position", "Off Board")
       subject.move_piece pawn, 'E5'
+    end
+
+    it 'should not be able to move a piece of the same colour off that board when another piece moves to that cell' do
+      pawn2 = double :pawn2, position: 'E5', white?: true
+      pawn_class = class_double('Pawn').as_stubbed_const(:transfer_nested_constants => true)
+      allow(pawn_class).to receive(:exists?).with({:position=>"E5", white?: false}){false}
+      expect{subject.move_piece pawn, 'E5'}.to raise_error 'Invalid Move'
     end
   end
 end
