@@ -148,15 +148,15 @@ describe Bishop do
     expect{subject.move_to 'B6'}.to raise_error "Invalid Move"
   end
 
-  # it 'should not be allowed to move any further backward-right diagonally after meeting another piece' do
-  #   occupied_cell = double :cell, position: "E3", occupied?: true
-  #   to_cell = double :cell, position: 'F2', occupied?: false
-  #   cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
-  #   allow(cell_class).to receive(:find_by).with({:position => 'E3'}) {occupied_cell}
-  #   allow(cell_class).to receive(:find_by).with({:position => 'D4'}) {from_cell}
-  #   allow(cell_class).to receive(:find_by).with({:position => 'F2'}) {to_cell}
-  #   expect{subject.move_to 'F2'}.to raise_error "Invalid Move"
-  # end
+  it 'should not be allowed to move any further backward-right diagonally after meeting another piece' do
+    occupied_cell = double :cell, position: "E3", occupied?: true
+    to_cell = double :cell, position: 'F2', occupied?: false
+    cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
+    allow(cell_class).to receive(:find_by).with({:position => 'E3'}) {occupied_cell}
+    allow(cell_class).to receive(:find_by).with({:position => 'D4'}) {from_cell}
+    allow(cell_class).to receive(:find_by).with({:position => 'F2'}) {to_cell}
+    expect{subject.move_to 'F2'}.to raise_error "Invalid Move"
+  end
 
 
 end
