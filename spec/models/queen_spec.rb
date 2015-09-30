@@ -35,21 +35,37 @@ describe Queen do
   end
 
   it 'should be able to move diagonally forward-right by one (from D4 to E5)' do
+    cell = double :cell, occupied?: false
+    allow(cell).to receive(:position)
+    cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
+    allow(cell_class).to receive(:find_by) {cell}
     subject.move_to 'E5'
     expect(subject.position).to eq 'E5'
   end
 
   it 'should be able to move diagonally forward-left by one (from D4 to C5)' do
+    cell = double :cell, occupied?: false
+    allow(cell).to receive(:position)
+    cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
+    allow(cell_class).to receive(:find_by) {cell}
     subject.move_to 'C5'
     expect(subject.position).to eq 'C5'
   end
 
   it 'should be able to move diagonally backward-right by one (from D4 to E3)' do
+    cell = double :cell, occupied?: false
+    allow(cell).to receive(:position)
+    cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
+    allow(cell_class).to receive(:find_by) {cell}
     subject.move_to 'E3'
     expect(subject.position).to eq 'E3'
   end
 
   it 'should be able to move diagonally backward-left by one (from D4 to C3)' do
+    cell = double :cell, occupied?: false
+    allow(cell).to receive(:position)
+    cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
+    allow(cell_class).to receive(:find_by) {cell}
     subject.move_to 'C3'
     expect(subject.position).to eq 'C3'
   end
@@ -78,5 +94,68 @@ describe Queen do
 
   end
 
+  it 'should not be allowed to move through a piece when moving forward' do
+    occupied_cell = double :cell, position: 'D5', occupied?: true
+    cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
+    allow(cell_class).to receive(:find_by).with({:position => 'D5'}) {occupied_cell}
+    expect{subject.move_to 'D6'}.to raise_error 'Invalid Move'
+  end
+
+  it 'should not be allowed to move through a piece when moving backward' do
+    occupied_cell = double :cell, position: 'D3', occupied?: true
+    cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
+    allow(cell_class).to receive(:find_by).with({:position => 'D3'}) {occupied_cell}
+    expect{subject.move_to 'D2'}.to raise_error 'Invalid Move'
+  end
+
+  it 'should not be allowed to move through a piece when moving right' do
+    occupied_cell = double :cell, position: 'E4', occupied?: true
+    cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
+    allow(cell_class).to receive(:find_by).with({:position => 'E4'}) {occupied_cell}
+    expect{subject.move_to 'F4'}.to raise_error 'Invalid Move'
+  end
+
+  it 'should not be allowed to move through a piece when moving left' do
+    occupied_cell = double :cell, position: 'C4', occupied?: true
+    cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
+    allow(cell_class).to receive(:find_by).with({:position => 'C4'}) {occupied_cell}
+    expect{subject.move_to 'B4'}.to raise_error 'Invalid Move'
+  end
+
+  it 'should not be allowed to move through a piece when moving diagonally forward-right' do
+    to_cell = double :cell, position: 'D4', occupied?: true
+    occupied_cell = double :cell, position: 'E5', occupied?: true
+    cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
+    allow(cell_class).to receive(:find_by).with({:position => 'D4'}) {to_cell}
+    allow(cell_class).to receive(:find_by).with({:position => 'E5'}) {occupied_cell}
+    expect{subject.move_to 'F6'}.to raise_error 'Invalid Move'
+  end
+
+  it 'should not be allowed to move through a piece when moving diagonally forward-left' do
+    to_cell = double :cell, position: 'D4', occupied?: true
+    occupied_cell = double :cell, position: 'C5', occupied?: true
+    cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
+    allow(cell_class).to receive(:find_by).with({:position => 'D4'}) {to_cell}
+    allow(cell_class).to receive(:find_by).with({:position => 'C5'}) {occupied_cell}
+    expect{subject.move_to 'B6'}.to raise_error 'Invalid Move'
+  end
+
+  it 'should not be allowed to move through a piece when moving diagonally backward-right' do
+    to_cell = double :cell, position: 'D4', occupied?: true
+    occupied_cell = double :cell, position: 'E3', occupied?: true
+    cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
+    allow(cell_class).to receive(:find_by).with({:position => 'D4'}) {to_cell}
+    allow(cell_class).to receive(:find_by).with({:position => 'E3'}) {occupied_cell}
+    expect{subject.move_to 'F2'}.to raise_error 'Invalid Move'
+  end
+
+  it 'should not be allowed to move through a piece when moving diagonally backward-left' do
+    to_cell = double :cell, position: 'D4', occupied?: true
+    occupied_cell = double :cell, position: 'C3', occupied?: true
+    cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
+    allow(cell_class).to receive(:find_by).with({:position => 'D4'}) {to_cell}
+    allow(cell_class).to receive(:find_by).with({:position => 'C3'}) {occupied_cell}
+    expect{subject.move_to 'B2'}.to raise_error 'Invalid Move'
+  end
 
 end
