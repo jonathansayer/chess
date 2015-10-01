@@ -2,12 +2,12 @@ class Pawn < ActiveRecord::Base
   belongs_to :board
 
   def move_to new_position
-    @new_position = new_position
-    raise "Invalid Move" unless possible_move?
+    raise "Invalid Move" unless possible_move? new_position
     self.position = new_position
   end
 
-  def possible_move?
+  def possible_move? new_position
+    @new_position = new_position
     return false if invalid_move?
     return true
   end
