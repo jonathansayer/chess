@@ -3,9 +3,14 @@ class Queen < ActiveRecord::Base
 
   def move_to new_position
     @new_position = new_position
-    raise "Invalid Move" unless horizonatal_move? or vertical_move? or diagonal_move?
-    raise 'Invalid Move' if piece_in_path?
+    raise "Invalid Move" unless possible_move?
     self.position = new_position
+  end
+
+  def possible_move?
+    return false unless horizonatal_move? or vertical_move? or diagonal_move?
+    return false if piece_in_path?
+    return true
   end
 
   private

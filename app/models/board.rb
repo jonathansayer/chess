@@ -16,7 +16,19 @@ class Board < ActiveRecord::Base
   end
 
   def white_in_check?
-    true
+    white_king = King.where(white?: true).first
+    pawns = Pawn.find_by(white?: false)
+    rooks = Rook.find_by(white?: false)
+    knights = Knight.find_by(white?: false)
+    bishops = Bishop.find_by(white?: false)
+    queen = Queen.find_by(white?: false)
+    king = King.find_by(white?: false)
+    opponent_pieces = pawns + rooks + knights + bishops + queen + king
+    opponent_pieces.each do |piece|
+      return true if piece.possible_move? white_king.position
+    end
+    return false
+
   end
 
   private
