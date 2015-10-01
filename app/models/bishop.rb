@@ -20,9 +20,15 @@ class Bishop < ActiveRecord::Base
   end
 
   def diagonal_move?
-    current_coords = ConvertCoordinates.convert_to_numercal_coords self.position
-    new_coords = ConvertCoordinates.convert_to_numercal_coords @new_position
     return ((current_coords[0] - new_coords[0]).abs == (current_coords[1] - new_coords[1]).abs)
+  end
+
+  def current_coords
+    current_coords = ConvertCoordinates.convert_to_numercal_coords self.position
+  end
+
+  def new_coords
+    new_coords = ConvertCoordinates.convert_to_numercal_coords @new_position
   end
 
   def any_pieces_on_path?
@@ -40,21 +46,18 @@ class Bishop < ActiveRecord::Base
   end
 
   def x_range
-    piece_coords_path = ConvertCoordinates.convert_to_numercal_coords self.position, @new_position
-    x_coordinates_in_path = ((piece_coords_path.first[0])..piece_coords_path.last[0]).to_a
-    if piece_coords_path.first[0] > piece_coords_path.last[0]
-      x_coordinates_in_path = piece_coords_path.first[0].downto(piece_coords_path.last[0]).to_a
+    x_coordinates_in_path = ((current_coords[0])..new_coords[0]).to_a
+    if current_coords[0] > new_coords[0]
+      x_coordinates_in_path = current_coords[0].downto(new_coords[0]).to_a
     end
     return x_coordinates_in_path
   end
 
   def y_range
-    piece_coords_path = ConvertCoordinates.convert_to_numercal_coords self.position, @new_position
-    y_coordinates_in_path = ((piece_coords_path.first[1])..piece_coords_path.last[1]).to_a
-    if piece_coords_path.first[1] > piece_coords_path.last[1]
-      y_coordinates_in_path = piece_coords_path.first[1].downto(piece_coords_path.last[1]).to_a
+    y_coordinates_in_path = ((current_coords[1])..new_coords[1]).to_a
+    if current_coords[1] > new_coords[1]
+      y_coordinates_in_path = current_coords[1].downto(new_coords[1]).to_a
     end
     return y_coordinates_in_path
   end
-
 end
