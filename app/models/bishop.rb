@@ -3,8 +3,13 @@ class Bishop < ActiveRecord::Base
 
   def move_to new_position
     @new_position = new_position
-    raise 'Invalid Move' if invalid_move?
+    raise 'Invalid Move' unless possible_move?
     self.position = new_position
+  end
+
+  def possible_move?
+    return false if invalid_move?
+    return true
   end
 
   private
