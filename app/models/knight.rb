@@ -13,28 +13,28 @@ class Knight < ActiveRecord::Base
 
   private
 
-  def move_two_horizontally?
-    current_coords = ConvertCoordinates.convert_to_numercal_coords self.position
-    new_coords = ConvertCoordinates.convert_to_numercal_coords @new_position
-    (current_coords[0] - new_coords[0]).abs == 2
-  end
+    def move_two_horizontally?
+      (current_coords[0] - new_coords[0]).abs == 2
+    end
 
-  def move_one_horizontally?
-    current_coords = ConvertCoordinates.convert_to_numercal_coords self.position
-    new_coords = ConvertCoordinates.convert_to_numercal_coords @new_position
-    (current_coords[0] - new_coords[0]).abs == 1
-  end
+    def move_one_horizontally?
+      (current_coords[0] - new_coords[0]).abs == 1
+    end
 
-  def move_two_vertically?
-    current_coords = ConvertCoordinates.convert_to_numercal_coords self.position
-    new_coords = ConvertCoordinates.convert_to_numercal_coords @new_position
-    (current_coords[1] - new_coords[1]).abs == 2
-  end
+    def move_two_vertically?
+      (current_coords[1] - new_coords[1]).abs == 2
+    end
 
-  def move_one_vertically?
-    current_coords = ConvertCoordinates.convert_to_numercal_coords self.position
-    new_coords = ConvertCoordinates.convert_to_numercal_coords @new_position
-    (current_coords[1] - new_coords[1]).abs == 1
-  end
+    def move_one_vertically?
+      (current_coords[1] - new_coords[1]).abs == 1
+    end
+
+    def current_coords
+      current_coords = ConvertCoordinates.convert_to_numercal_coords self.position
+    end
+
+    def new_coords
+      new_coords = ConvertCoordinates.convert_to_numercal_coords @new_position
+    end
 
 end
