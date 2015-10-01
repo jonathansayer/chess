@@ -24,18 +24,18 @@ class Bishop < ActiveRecord::Base
   end
 
   def current_coords
-    current_coords = ConvertCoordinates.convert_to_numercal_coords self.position
+    current_coords = ConvertCoordinates.to_numercal_coords self.position
   end
 
   def new_coords
-    new_coords = ConvertCoordinates.convert_to_numercal_coords @new_position
+    new_coords = ConvertCoordinates.to_numercal_coords @new_position
   end
 
   def any_pieces_on_path?
     index = 0
     loop do
       break if x_range[index] == nil or y_range[index] == nil
-      piece_position_path = ConvertCoordinates.convert_to_alphabetical_coords [x_range[index], y_range[index]]
+      piece_position_path = ConvertCoordinates.to_alphabetical_coords [x_range[index], y_range[index]]
       index += 1
       cell = Cell.find_by(position: piece_position_path)
       if cell.position != self.position and cell != @new_position

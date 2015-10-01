@@ -28,11 +28,11 @@ class Queen < ActiveRecord::Base
     end
 
     def current_coords
-      current_coords = ConvertCoordinates.convert_to_numercal_coords self.position
+      current_coords = ConvertCoordinates.to_numercal_coords self.position
     end
 
     def new_coords
-      new_coords = ConvertCoordinates.convert_to_numercal_coords @new_position
+      new_coords = ConvertCoordinates.to_numercal_coords @new_position
     end
 
     def piece_in_path?
@@ -44,7 +44,7 @@ class Queen < ActiveRecord::Base
 
     def piece_in_the_y_range?
       y_range.each do |y_coord|
-        path_position = ConvertCoordinates.convert_to_alphabetical_coords [current_coords[0],y_coord]
+        path_position = ConvertCoordinates.to_alphabetical_coords [current_coords[0],y_coord]
         if path_position != self.position and path_position != @new_position
           return true if Cell.find_by(position: path_position).occupied?
         end
@@ -54,7 +54,7 @@ class Queen < ActiveRecord::Base
 
     def piece_in_the_x_range?
       x_range.each do |x_coord|
-        path_position = ConvertCoordinates.convert_to_alphabetical_coords [x_coord,current_coords[1]]
+        path_position = ConvertCoordinates.to_alphabetical_coords [x_coord,current_coords[1]]
         if path_position != self.position and path_position != @new_position
           return true if Cell.find_by(position: path_position).occupied?
         end
@@ -66,7 +66,7 @@ class Queen < ActiveRecord::Base
       index = 0
       loop do
         break if x_range[index] == nil or y_range[index] == nil
-        piece_position_path = ConvertCoordinates.convert_to_alphabetical_coords [x_range[index], y_range[index]]
+        piece_position_path = ConvertCoordinates.to_alphabetical_coords [x_range[index], y_range[index]]
         index += 1
         cell = Cell.find_by(position: piece_position_path)
         if cell.position != self.position and cell != @new_position

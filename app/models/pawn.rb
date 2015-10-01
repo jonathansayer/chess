@@ -21,9 +21,9 @@ class Pawn < ActiveRecord::Base
   end
 
   def convert_to_and_from_coordinates
-    @current_coords = ConvertCoordinates.convert_to_numercal_coords self.position
-    @new_coords = ConvertCoordinates.convert_to_numercal_coords @new_position
-    @cell_in_front_position = ConvertCoordinates.convert_to_alphabetical_coords [@current_coords[0], @current_coords[1]+1]
+    @current_coords = ConvertCoordinates.to_numercal_coords self.position
+    @new_coords = ConvertCoordinates.to_numercal_coords @new_position
+    @cell_in_front_position = ConvertCoordinates.to_alphabetical_coords [@current_coords[0], @current_coords[1]+1]
   end
 
   def vertical_move?

@@ -25,7 +25,6 @@ class Board < ActiveRecord::Base
     king = King.where(white?: false)
     opponent_pieces = pawns + rooks + knights + bishops + queen + king
     opponent_pieces.each do |piece|
-      p piece
       return true if piece.possible_move? white_king.position
     end
     return false
