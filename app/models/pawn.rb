@@ -2,32 +2,38 @@ class Pawn < ActiveRecord::Base
   belongs_to :board
 
   def move_to new_position
-    raise "Invalid Move" if invalid_move? new_position
+    @new_position = new_position
+    raise "Invalid Move" unless possible_move?
     self.position = new_position
+  end
+
+  def possible_move?
+    return false if invalid_move?
+    return true
   end
 
   private
 
-  def invalid_move? new_position
-    convert_to_and_from_coordinates new_position
-    return true unless (vertical_move? new_position or diagonal_move? new_position)
-    return true if cell_infront_occupied? new_position and !diagonal_move? new_position
+  def invalid_move?
+    convert_to_and_from_coordinates
+    return true unless (vertical_move? or diagonal_move?)
+    return true if cell_infront_occupied? and !diagonal_move?
   end
 
-  def convert_to_and_from_coordinates new_position
+  def convert_to_and_from_coordinates
     @current_coords = ConvertCoordinates.convert_to_numercal_coords self.position
-    @new_coords = ConvertCoordinates.convert_to_numercal_coords new_position
+    @new_coords = ConvertCoordinates.convert_to_numercal_coords @new_position
     @cell_in_front_position = ConvertCoordinates.convert_to_alphabetical_coords [@current_coords[0], @current_coords[1]+1]
   end
 
-  def vertical_move? new_position
+  def vertical_move?
     return false if @new_coords[1] - @current_coords[1] > move_limit
     return @new_coords[0] == @current_coords[0]
   end
 
-  def diagonal_move? new_position
+  def diagonal_move?
     return false if @new_coords[0] - @current_coords[0] > 1
-    return false if Cell.find_by(position: new_position).occupied? == false
+    return false if Cell.find_by(position: @new_position).occupied? == false
     return ((@current_coords[0] - @new_coords[0]).abs == (@current_coords[1] - @new_coords[1]).abs)
   end
 
@@ -36,8 +42,8 @@ class Pawn < ActiveRecord::Base
     return 1
   end
 
-  def cell_infront_occupied? new_position
+  def cell_infront_occupied?
     return true if Cell.find_by(position: @cell_in_front_position).occupied?
-    return true if Cell.find_by(position: new_position).occupied? and vertical_move? new_position
+    return true if Cell.find_by(position: @new_position).occupied? and vertical_move?
   end
 end

@@ -55,9 +55,7 @@ describe Board do
         pawn_class = class_double('Pawn').as_stubbed_const(:transfer_nested_constants => true)
         allow(pawn_class).to receive(:exists?).with({:position=>"E5", white?: false}){true}
         allow(pawn_class).to receive(:where).with({:position=>"E5", white?: false}){[pawn2]}
-
       end
-
 
     it 'should be able to move to a cell which is already occupied and cell should still be occupied' do
       allow(pawn2).to receive(:update_column).with("position", "Off Board")
@@ -76,5 +74,24 @@ describe Board do
       allow(pawn_class).to receive(:exists?).with({:position=>"E5", white?: false}){false}
       expect{subject.move_piece pawn, 'E5'}.to raise_error 'Invalid Move'
     end
+  end
+
+  context 'when a king is in check' do
+
+    let(:king){double :king, position: 'D4', white?: true}
+
+
+    it 'should know when a king is in cheque from the opposite colour' do
+      rook = double :rook, position: 'D4', white?: false
+      expect(subject.white_in_check?).to eq true
+    end
+
+    it 'should know when a king is not in cheque from the opposite colour' do
+      rook = double :rook, position: 'D3', white?: false
+      expect(subject.white_in_check?).to eq false
+    end
+
+
+
   end
 end

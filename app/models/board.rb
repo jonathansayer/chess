@@ -15,6 +15,10 @@ class Board < ActiveRecord::Base
     leave_cell_at old_position
   end
 
+  def white_in_check?
+    true
+  end
+
   private
 
   def occupy_cell_at new_position
