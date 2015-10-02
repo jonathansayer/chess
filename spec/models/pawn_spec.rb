@@ -12,7 +12,7 @@ describe Pawn do
 
   it 'should know possible moves' do
     expect(subject).to respond_to(:possible_move?).with(1).argument
-  end 
+  end
 
   context "When move one square forward" do
 
@@ -50,6 +50,13 @@ describe Pawn do
       allow(cell_class).to receive(:find_by).with({:position => 'D4'}) {to_cell}
       allow(cell_class).to receive(:find_by).with({:position => 'D3'}){in_between_cell}
       allow(cell_class).to receive(:find_by).with({:position => 'D5'}){in_between_cell}
+      convert_class = class_double('ConvertCoordinates').as_stubbed_const(:transfer_nested_constants => true)
+      allow(convert_class).to receive(:to_numercal_coords).with('D2'){[4,2]}
+      allow(convert_class).to receive(:to_numercal_coords).with('D3'){[4,3]}
+      allow(convert_class).to receive(:to_numercal_coords).with('D4'){[4,4]}
+      allow(convert_class).to receive(:to_numercal_coords).with('D5'){[4,5]}
+      allow(convert_class).to receive(:to_alphabetical_coords).with([4,3]) {'D3'}
+      allow(convert_class).to receive(:to_alphabetical_coords).with([4,4]) {'D4'}
     end
 
     it 'should be able to move from D2 to D4' do
@@ -82,6 +89,13 @@ describe Pawn do
     before(:each) do
       cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
       allow(cell_class).to receive(:find_by).with({:position => 'E3'}) {to_cell}
+      convert_class = class_double('ConvertCoordinates').as_stubbed_const(:transfer_nested_constants => true)
+      allow(convert_class).to receive(:to_numercal_coords).with('D2'){[4,2]}
+      allow(convert_class).to receive(:to_numercal_coords).with('D3'){[4,3]}
+      allow(convert_class).to receive(:to_numercal_coords).with('E3'){[5,3]}
+      allow(convert_class).to receive(:to_numercal_coords).with('F4'){[6,4]}
+      allow(convert_class).to receive(:to_alphabetical_coords).with([4,3]) {'D3'}
+      allow(convert_class).to receive(:to_alphabetical_coords).with([4,4]) {'D4'}
     end
 
 
