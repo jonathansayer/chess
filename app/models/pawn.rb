@@ -46,10 +46,10 @@ class Pawn < ActiveRecord::Base
   end
 
   def current_coords
-    ConvertCoordinates.to_numercal_coords self.position
+    ConvertCoordinates.to_numerical_coords self.position
   end
 
   def new_coords
-    ConvertCoordinates.to_numercal_coords @new_position
+    ConvertCoordinates.to_numerical_coords @new_position
   end
 end

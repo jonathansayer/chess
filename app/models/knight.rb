@@ -30,11 +30,11 @@ class Knight < ActiveRecord::Base
     end
 
     def current_coords
-      current_coords = ConvertCoordinates.to_numercal_coords self.position
+      current_coords = ConvertCoordinates.to_numerical_coords self.position
     end
 
     def new_coords
-      new_coords = ConvertCoordinates.to_numercal_coords @new_position
+      new_coords = ConvertCoordinates.to_numerical_coords @new_position
     end
 
 end

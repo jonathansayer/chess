@@ -22,8 +22,8 @@ describe Pawn do
       cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
       allow(cell_class).to receive(:find_by).with({:position => 'D3'}) {to_cell}
       convert_class = class_double('ConvertCoordinates').as_stubbed_const(:transfer_nested_constants => true)
-      allow(convert_class).to receive(:to_numercal_coords).with('D2'){[4,2]}
-      allow(convert_class).to receive(:to_numercal_coords).with('D3') {[4,3]}
+      allow(convert_class).to receive(:to_numerical_coords).with('D2'){[4,2]}
+      allow(convert_class).to receive(:to_numerical_coords).with('D3') {[4,3]}
       allow(convert_class).to receive(:to_alphabetical_coords).with([4,3]) {'D3'}
     end
 
@@ -51,10 +51,10 @@ describe Pawn do
       allow(cell_class).to receive(:find_by).with({:position => 'D3'}){in_between_cell}
       allow(cell_class).to receive(:find_by).with({:position => 'D5'}){in_between_cell}
       convert_class = class_double('ConvertCoordinates').as_stubbed_const(:transfer_nested_constants => true)
-      allow(convert_class).to receive(:to_numercal_coords).with('D2'){[4,2]}
-      allow(convert_class).to receive(:to_numercal_coords).with('D3'){[4,3]}
-      allow(convert_class).to receive(:to_numercal_coords).with('D4'){[4,4]}
-      allow(convert_class).to receive(:to_numercal_coords).with('D5'){[4,5]}
+      allow(convert_class).to receive(:to_numerical_coords).with('D2'){[4,2]}
+      allow(convert_class).to receive(:to_numerical_coords).with('D3'){[4,3]}
+      allow(convert_class).to receive(:to_numerical_coords).with('D4'){[4,4]}
+      allow(convert_class).to receive(:to_numerical_coords).with('D5'){[4,5]}
       allow(convert_class).to receive(:to_alphabetical_coords).with([4,3]) {'D3'}
       allow(convert_class).to receive(:to_alphabetical_coords).with([4,4]) {'D4'}
     end
@@ -90,10 +90,10 @@ describe Pawn do
       cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
       allow(cell_class).to receive(:find_by).with({:position => 'E3'}) {to_cell}
       convert_class = class_double('ConvertCoordinates').as_stubbed_const(:transfer_nested_constants => true)
-      allow(convert_class).to receive(:to_numercal_coords).with('D2'){[4,2]}
-      allow(convert_class).to receive(:to_numercal_coords).with('D3'){[4,3]}
-      allow(convert_class).to receive(:to_numercal_coords).with('E3'){[5,3]}
-      allow(convert_class).to receive(:to_numercal_coords).with('F4'){[6,4]}
+      allow(convert_class).to receive(:to_numerical_coords).with('D2'){[4,2]}
+      allow(convert_class).to receive(:to_numerical_coords).with('D3'){[4,3]}
+      allow(convert_class).to receive(:to_numerical_coords).with('E3'){[5,3]}
+      allow(convert_class).to receive(:to_numerical_coords).with('F4'){[6,4]}
       allow(convert_class).to receive(:to_alphabetical_coords).with([4,3]) {'D3'}
       allow(convert_class).to receive(:to_alphabetical_coords).with([4,4]) {'D4'}
     end

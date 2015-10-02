@@ -10,7 +10,7 @@ class ConvertCoordinates
                       'H' => 8
                       }
 
-  def self.to_numercal_coords *positions
+  def self.to_numerical_coords *positions
     coordinates = []
     positions.each do |position|
       split_position = position.split(//)
