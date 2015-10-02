@@ -16,7 +16,7 @@ class Rook < ActiveRecord::Base
   private
 
   def horizonatal_move?
-      return new_coords[1] == current_coords[1]
+    return new_coords[1] == current_coords[1]
   end
 
   def vertical_move?
