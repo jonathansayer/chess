@@ -10,6 +10,10 @@ describe Pawn do
     expect(subject).to respond_to(:move_to).with(1).argument
   end
 
+  it 'should know possible moves' do
+    expect(subject).to respond_to(:possible_move?).with(1).argument
+  end 
+
   context "When move one square forward" do
 
     let(:to_cell){double :to_cell, position: 'D3'}
@@ -17,6 +21,10 @@ describe Pawn do
     before(:each) do
       cell_class = class_double('Cell').as_stubbed_const(:transfer_nested_constants => true)
       allow(cell_class).to receive(:find_by).with({:position => 'D3'}) {to_cell}
+      convert_class = class_double('ConvertCoordinates').as_stubbed_const(:transfer_nested_constants => true)
+      allow(convert_class).to receive(:to_numercal_coords).with('D2'){[4,2]}
+      allow(convert_class).to receive(:to_numercal_coords).with('D3') {[4,3]}
+      allow(convert_class).to receive(:to_alphabetical_coords).with([4,3]) {'D3'}
     end
 
     it 'should allow a pawn to move from D2 to D3' do
