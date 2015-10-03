@@ -42,5 +42,4 @@ class ConvertCoordinates
       end
     end
   end
-
 end

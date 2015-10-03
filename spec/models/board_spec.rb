@@ -79,12 +79,7 @@ describe Board do
   context 'when a king is in check' do
 
     let(:white_king){double :white_king, position:'D4', white?: true}
-
-    it 'should know when a king is in cheque from the opposite colour' do
-      rook = double :rook, white?: false
-      allow(rook).to receive(:possible_move?) {true}
-      rook_class = class_double('Rook').as_stubbed_const(:transfer_nested_constants => true)
-      allow(rook_class).to receive(:where).with({:white? => false}){[rook]}
+    before(:each) do
       pawn = double :pawn, white?: false
       allow(pawn).to receive(:possible_move?) {false}
       pawn_class = class_double('Pawn').as_stubbed_const(:transfer_nested_constants => true)
@@ -106,6 +101,14 @@ describe Board do
       king_class = class_double('King').as_stubbed_const(:transfer_nested_constants => true)
       allow(king_class).to receive(:where).with({:white? => true}){[white_king]}
       allow(king_class).to receive(:where).with({:white? => false}){[king]}
+    end
+
+
+    it 'should know when a king is in cheque from the opposite colour' do
+      rook = double :rook, white?: false
+      allow(rook).to receive(:possible_move?) {true}
+      rook_class = class_double('Rook').as_stubbed_const(:transfer_nested_constants => true)
+      allow(rook_class).to receive(:where).with({:white? => false}){[rook]}
       expect(subject.white_in_check?).to eq true
     end
 
@@ -114,27 +117,6 @@ describe Board do
       allow(rook).to receive(:possible_move?) {false}
       rook_class = class_double('Rook').as_stubbed_const(:transfer_nested_constants => true)
       allow(rook_class).to receive(:where).with({:white? => false}){[rook]}
-      pawn = double :pawn, white?: false
-      allow(pawn).to receive(:possible_move?) {false}
-      pawn_class = class_double('Pawn').as_stubbed_const(:transfer_nested_constants => true)
-      allow(pawn_class).to receive(:where).with({:white? => false}){[pawn]}
-      knight = double :knight, white?: false
-      allow(knight).to receive(:possible_move?) {false}
-      knight_class = class_double('Knight').as_stubbed_const(:transfer_nested_constants => true)
-      allow(knight_class).to receive(:where).with({:white? => false}){[knight]}
-      bishop = double :bishop, white?: false
-      allow(bishop).to receive(:possible_move?) {false}
-      bishop_class = class_double('Bishop').as_stubbed_const(:transfer_nested_constants => true)
-      allow(bishop_class).to receive(:where).with({:white? => false}){[bishop]}
-      queen = double :queen, white?: false
-      allow(queen).to receive(:possible_move?) {false}
-      queen_class = class_double('Queen').as_stubbed_const(:transfer_nested_constants => true)
-      allow(queen_class).to receive(:where).with({:white? => false}){[queen]}
-      king = double :king, white?: false
-      allow(king).to receive(:possible_move?) {false}
-      king_class = class_double('King').as_stubbed_const(:transfer_nested_constants => true)
-      allow(king_class).to receive(:where).with({:white? => true}){[white_king]}
-      allow(king_class).to receive(:where).with({:white? => false}){[king]}
       expect(subject.white_in_check?).to eq false
     end
   end
