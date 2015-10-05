@@ -21,14 +21,15 @@ class Bishop < ActiveRecord::Base
 
   def diagonal_move?
     return ((current_coords[0] - new_coords[0]).abs == (current_coords[1] - new_coords[1]).abs)
+
   end
 
   def current_coords
-    current_coords = ConvertCoordinates.to_numerical_coords self.position
+    ConvertCoordinates.to_numerical_coords self.position
   end
 
   def new_coords
-    new_coords = ConvertCoordinates.to_numerical_coords @new_position
+    ConvertCoordinates.to_numerical_coords @new_position
   end
 
   def any_pieces_on_path?
