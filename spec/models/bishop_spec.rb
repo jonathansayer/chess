@@ -34,7 +34,7 @@ describe Bishop do
     it 'should be able to move diagonally forward-left by 1(from D4 to C5)' do
       convert_class = class_double('ConvertCoordinates').as_stubbed_const(:transfer_nested_constants => true)
       allow(convert_class).to receive(:to_numerical_coords).with('D4'){[4,4]}
-      allow(convert_class).to receive(:to_numerical_coords).with('C5'){[5,5]}
+      allow(convert_class).to receive(:to_numerical_coords).with('C5'){[3,5]}
       allow(convert_class).to receive(:to_alphabetical_coords)
       subject.move_to 'C5'
       expect(subject.position).to eq 'C5'
@@ -43,7 +43,7 @@ describe Bishop do
     it 'should be able to move diagonally backwards-right by 1(from D4 to E3)' do
       convert_class = class_double('ConvertCoordinates').as_stubbed_const(:transfer_nested_constants => true)
       allow(convert_class).to receive(:to_numerical_coords).with('D4'){[4,4]}
-      allow(convert_class).to receive(:to_numerical_coords).with('E3'){[5,5]}
+      allow(convert_class).to receive(:to_numerical_coords).with('E3'){[5,3]}
       allow(convert_class).to receive(:to_alphabetical_coords)
       subject.move_to 'E3'
       expect(subject.position).to eq 'E3'
@@ -52,7 +52,7 @@ describe Bishop do
     it 'should be able to move diagonally backwards-left by 1(from D4 to C3)' do
       convert_class = class_double('ConvertCoordinates').as_stubbed_const(:transfer_nested_constants => true)
       allow(convert_class).to receive(:to_numerical_coords).with('D4'){[4,4]}
-      allow(convert_class).to receive(:to_numerical_coords).with('C3'){[5,5]}
+      allow(convert_class).to receive(:to_numerical_coords).with('C3'){[3,3]}
       allow(convert_class).to receive(:to_alphabetical_coords)
       subject.move_to 'C3'
       expect(subject.position).to eq 'C3'
