@@ -79,45 +79,61 @@ describe Board do
   context 'when a king is in check' do
 
     let(:white_king){double :white_king, position:'D4', white?: true}
+    let(:black_king){double :black_king, position:'D6', white?: false}
     before(:each) do
-      pawn = double :pawn, white?: false
+      pawn = double :pawn
       allow(pawn).to receive(:possible_move?) {false}
-      pawn_class = class_double('Pawn').as_stubbed_const(:transfer_nested_constants => true)
-      allow(pawn_class).to receive(:where).with({:white? => false}){[pawn]}
-      knight = double :knight, white?: false
+      pawn_class = class_double('Pawn').as_stubbed_const
+      allow(pawn_class).to receive(:where){[pawn]}
+      knight = double :knight
       allow(knight).to receive(:possible_move?) {false}
-      knight_class = class_double('Knight').as_stubbed_const(:transfer_nested_constants => true)
-      allow(knight_class).to receive(:where).with({:white? => false}){[knight]}
-      bishop = double :bishop, white?: false
+      knight_class = class_double('Knight').as_stubbed_const
+      allow(knight_class).to receive(:where){[knight]}
+      bishop = double :bishop
       allow(bishop).to receive(:possible_move?) {false}
-      bishop_class = class_double('Bishop').as_stubbed_const(:transfer_nested_constants => true)
-      allow(bishop_class).to receive(:where).with({:white? => false}){[bishop]}
-      queen = double :queen, white?: false
+      bishop_class = class_double('Bishop').as_stubbed_const
+      allow(bishop_class).to receive(:where){[bishop]}
+      queen = double :queen
       allow(queen).to receive(:possible_move?) {false}
-      queen_class = class_double('Queen').as_stubbed_const(:transfer_nested_constants => true)
-      allow(queen_class).to receive(:where).with({:white? => false}){[queen]}
-      king = double :king, white?: false
-      allow(king).to receive(:possible_move?) {false}
-      king_class = class_double('King').as_stubbed_const(:transfer_nested_constants => true)
+      queen_class = class_double('Queen').as_stubbed_const
+      allow(queen_class).to receive(:where){[queen]}
+      king = double :king
+      allow(black_king).to receive(:possible_move?) {false}
+      allow(white_king).to receive(:possible_move?) {false}
+      king_class = class_double('King').as_stubbed_const
       allow(king_class).to receive(:where).with({:white? => true}){[white_king]}
-      allow(king_class).to receive(:where).with({:white? => false}){[king]}
+      allow(king_class).to receive(:where).with({:white? => false}){[black_king]}
     end
 
 
-    it 'should know when a king is in cheque from the opposite colour' do
+    it 'should know when a white king is in cheque from the opposite colour' do
       rook = double :rook, white?: false
       allow(rook).to receive(:possible_move?) {true}
       rook_class = class_double('Rook').as_stubbed_const(:transfer_nested_constants => true)
       allow(rook_class).to receive(:where).with({:white? => false}){[rook]}
-      expect(subject.white_in_check?).to eq true
+      allow(rook_class).to receive(:where).with({:white? => true})
+      expect(subject.in_check?).to eq true
     end
 
-    it 'should know when a king is not in cheque from the opposite colour' do
-      rook = double :rook, white?: false
-      allow(rook).to receive(:possible_move?) {false}
+    it 'should know when a white king is not in cheque from the opposite colour' do
+      black_rook = double :black_rook, white?: false
+      allow(black_rook).to receive(:possible_move?) {false}
+      white_rook = double :white_rook, white?: true
+      allow(white_rook).to receive(:possible_move?) {false}
       rook_class = class_double('Rook').as_stubbed_const(:transfer_nested_constants => true)
-      allow(rook_class).to receive(:where).with({:white? => false}){[rook]}
-      expect(subject.white_in_check?).to eq false
+      allow(rook_class).to receive(:where).with({:white? => false}){[black_rook]}
+      allow(rook_class).to receive(:where).with({:white? => true}) {[white_rook]}
+      expect(subject.in_check?).to eq false
     end
-  end
+
+    it 'should know when a black king is in check from a white piece' do
+      white_rook = double :rook, white?: true
+      allow(white_rook).to receive(:possible_move?) {true}
+      black_rook = double :rook, white?: false
+      allow(black_rook).to receive(:possible_move?) {false}
+      rook_class = class_double('Rook').as_stubbed_const
+      allow(rook_class).to receive(:where).with({:white? => true}){[white_rook]}
+      allow(rook_class).to receive(:where).with({:white? => false}){[black_rook]}
+      expect(subject.in_check?).to eq true
+    end
 end

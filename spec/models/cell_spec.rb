@@ -24,5 +24,5 @@ describe Cell do
     subject = Cell.create(occupied?: true )
     subject.change_occupied_mode
     expect(subject.occupied?).to eq false
-  end 
+  end
 end
