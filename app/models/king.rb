@@ -7,11 +7,22 @@ class King < ActiveRecord::Base
     self.position = new_position
   end
 
-  def possible_move?
-    return true if horizonatal_move? or vertical_move? or diagonal_move?
+  def all_possible_moves
+    possible_moves = []
+    cells = Cell.all
+    cells.each do |cell|
+      @new_position = cell.position
+      possible_moves.push(cell.position) if possible_move?
+    end
+    possible_moves
   end
 
   private
+
+  def possible_move?
+    return true if horizonatal_move? or vertical_move? or diagonal_move?
+    return false
+  end
 
   def horizonatal_move?
       return false if (new_coords[0] - current_coords[0]).abs > move_limit

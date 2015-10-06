@@ -58,13 +58,13 @@ describe Board do
       end
 
     it 'should be able to move to a cell which is already occupied and cell should still be occupied' do
-      allow(pawn2).to receive(:update_column).with("position", "Off Board")
+      allow(pawn2).to receive(:destroy)
       expect(to_cell).not_to receive(:change_occupied_mode)
       subject.move_piece pawn, 'E5'
     end
 
     it 'should be able to move a piece of the opposite colour off that board when another piece moves to that cell' do
-      expect(pawn2).to receive(:update_column).with("position", "Off Board")
+      expect(pawn2).to receive(:destroy)
       subject.move_piece pawn, 'E5'
     end
 
@@ -136,5 +136,15 @@ describe Board do
       allow(rook_class).to receive(:where).with({:white? => false}){[black_rook]}
       expect(subject.in_check?).to eq true
     end
-  end 
+  end
+
+  context 'when check mate occurs' do
+
+    it 'should know when a white player is in check' do
+      white_king = double :white_king, position:'B2', white?: true
+      black_queen = double :black_queen, position:'B4', white?: false
+      black_rook1 = double :black_rook1, position: 'D1', white?: false
+      expect(subject.check_mate?).to eq true
+    end
+  end
 end

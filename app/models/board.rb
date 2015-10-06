@@ -19,6 +19,9 @@ class Board < ActiveRecord::Base
     white_in_check? or black_in_check?
   end
 
+  def check_mate?
+  end 
+
   private
 
   def occupy_cell_at new_position
@@ -48,7 +51,7 @@ class Board < ActiveRecord::Base
     else
       raise 'Invalid Move'
     end
-    removed_piece.update_column("position", "Off Board")
+    removed_piece.destroy
   end
 
   def white_in_check?
