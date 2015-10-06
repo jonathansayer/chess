@@ -136,4 +136,5 @@ describe Board do
       allow(rook_class).to receive(:where).with({:white? => false}){[black_rook]}
       expect(subject.in_check?).to eq true
     end
+  end 
 end
