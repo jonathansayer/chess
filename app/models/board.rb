@@ -19,8 +19,33 @@ class Board < ActiveRecord::Base
     white_in_check? or black_in_check?
   end
 
-  def check_mate?
-  end 
+  def white_in_check_mate?
+    return false if !white_in_check?
+    king = King.where(white?: true).first
+    original_position = king.position
+    king.all_possible_moves.each do |possible_move|
+      p king.position = possible_move
+      if white_in_check? == false
+        king.position = original_position
+        return false
+      end
+    end
+    return true
+  end
+
+  def black_in_check_mate?
+    return false if !black_in_check?
+    king = King.where(white?: false).first
+    original_position = king.position
+    king.all_possible_moves.each do |possible_move|
+      p king.position = possible_move
+      if black_in_check? == false
+        king.position = original_position
+        return false
+      end
+    end
+    return true
+  end
 
   private
 
@@ -83,5 +108,4 @@ class Board < ActiveRecord::Base
     end
     return false
   end
-
 end

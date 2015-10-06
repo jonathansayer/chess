@@ -158,6 +158,7 @@ describe King do
     Cell.create(position:'C5')
     Cell.create(position:'C4')
     Cell.create(position:'B2')
+    Cell.create(position:'D4')
     expect(subject.all_possible_moves).to eq ['C3','D3','E3','E4','E5', 'D5','C5','C4']
   end
 end

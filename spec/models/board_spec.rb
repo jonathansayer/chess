@@ -140,11 +140,59 @@ describe Board do
 
   context 'when check mate occurs' do
 
-    it 'should know when a white player is in check' do
-      white_king = double :white_king, position:'B2', white?: true
-      black_queen = double :black_queen, position:'B4', white?: false
-      black_rook1 = double :black_rook1, position: 'D1', white?: false
-      expect(subject.check_mate?).to eq true
+
+    it 'should know when a white player is in check mate' do
+      white_king = double :white_king, position:'B1', white?:true
+      black_queen = double :black_queen, position:'B4', white?:false
+      black_rook1 = double :black_rook1, position:'D1', white?:false
+      black_rook2 = double :black_rook2, position:'F2', white?:false
+      king_class = class_double('King').as_stubbed_const
+      allow(king_class).to receive(:where).with({:white? => true}){[white_king]}
+      allow(white_king).to receive(:all_possible_moves){['A1','B1','C1','C2','C3','B3','A3','A2']}
+      allow(white_king).to receive(:position=).with('A1'){'A1'}
+      allow(white_king).to receive(:position=).with('B1'){'B1'}
+      allow(white_king).to receive(:position=).with('C1'){'C1'}
+      allow(white_king).to receive(:position=).with('C2'){'C2'}
+      allow(white_king).to receive(:position=).with('C3'){'C3'}
+      allow(white_king).to receive(:position=).with('B3'){'B3'}
+      allow(white_king).to receive(:position=).with('A3'){'A3'}
+      allow(white_king).to receive(:position=).with('A2'){'A2'}
+      allow(king_class).to receive(:where).with({:white? => false}){[]}
+      rook_class = class_double('Rook').as_stubbed_const
+      allow(rook_class).to receive(:where).with({:white? => false}){[black_rook1, black_rook2]}
+      queen_class = class_double('Queen').as_stubbed_const
+      allow(queen_class).to receive(:where).with({:white? => false}){[black_queen]}
+      allow(black_rook1).to receive(:possible_move?){true}
+      allow(black_rook2).to receive(:possible_move?){true}
+      allow(black_queen).to receive(:possible_move?){true}
+      expect(subject.white_in_check_mate?).to eq true
+    end
+
+    it 'should know when a black player is in check mate' do
+      black_king = double :white_king, position:'B1', white?:false
+      white_queen = double :black_queen, position:'B4', white?:true
+      white_rook1 = double :black_rook1, position:'D1', white?:true
+      white_rook2 = double :black_rook2, position:'F2', white?:true
+      king_class = class_double('King').as_stubbed_const
+      allow(king_class).to receive(:where).with({:white? => false}){[black_king]}
+      allow(black_king).to receive(:all_possible_moves){['A1','B1','C1','C2','C3','B3','A3','A2']}
+      allow(black_king).to receive(:position=).with('A1'){'A1'}
+      allow(black_king).to receive(:position=).with('B1'){'B1'}
+      allow(black_king).to receive(:position=).with('C1'){'C1'}
+      allow(black_king).to receive(:position=).with('C2'){'C2'}
+      allow(black_king).to receive(:position=).with('C3'){'C3'}
+      allow(black_king).to receive(:position=).with('B3'){'B3'}
+      allow(black_king).to receive(:position=).with('A3'){'A3'}
+      allow(black_king).to receive(:position=).with('A2'){'A2'}
+      allow(king_class).to receive(:where).with({:white? => true}){[]}
+      rook_class = class_double('Rook').as_stubbed_const
+      allow(rook_class).to receive(:where).with({:white? => true}){[white_rook1, white_rook2]}
+      queen_class = class_double('Queen').as_stubbed_const
+      allow(queen_class).to receive(:where).with({:white? => true}){[white_queen]}
+      allow(white_rook1).to receive(:possible_move?){true}
+      allow(white_rook2).to receive(:possible_move?){true}
+      allow(white_queen).to receive(:possible_move?){true}
+      expect(subject.black_in_check_mate?).to eq true
     end
   end
 end

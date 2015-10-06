@@ -17,12 +17,13 @@ class King < ActiveRecord::Base
     possible_moves
   end
 
-  private
-
   def possible_move?
+    return false if @new_position == self.position
     return true if horizonatal_move? or vertical_move? or diagonal_move?
     return false
   end
+
+  private
 
   def horizonatal_move?
       return false if (new_coords[0] - current_coords[0]).abs > move_limit
