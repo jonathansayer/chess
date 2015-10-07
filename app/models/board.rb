@@ -44,8 +44,8 @@ class Board < ActiveRecord::Base
 
   def occupy_cell_at new_position
     to_cell = Cell.find_by(position: new_position)
-    to_cell.change_occupied_mode if to_cell.occupied? == false
     remove_piece new_position if to_cell.occupied? == true
+    to_cell.change_occupied_mode if to_cell.occupied? == false
   end
 
   def leave_cell_at old_position
