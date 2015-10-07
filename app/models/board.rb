@@ -16,8 +16,23 @@ class Board < ActiveRecord::Base
     leave_cell_at old_position
   end
 
-  def in_check?
-    white_in_check? or black_in_check?
+  def in_check? colour
+    is_white = false
+    if colour == 'white'
+      is_white = true
+    end
+    checked_king = King.where(white?: is_white).first
+    pawns = Pawn.where(white?: !is_white)
+    rooks = Rook.where(white?: !is_white)
+    knights = Knight.where(white?: !is_white)
+    bishops = Bishop.where(white?: !is_white)
+    queen = Queen.where(white?: !is_white)
+    king = King.where(white?: !is_white)
+    opponent_pieces = pawns + rooks + knights + bishops + queen + king
+    opponent_pieces.each do |piece|
+      return true if piece.possible_move? checked_king.position
+    end
+    return false
   end
 
   def check_mate? colour
@@ -25,13 +40,13 @@ class Board < ActiveRecord::Base
     if colour == 'white'
       is_white = true
     end
-    return false if is_white and !white_in_check?
-    return false if !is_white and !black_in_check?
+    return false if is_white and !in_check?('white')
+    return false if !is_white and !in_check?('black')
     king = King.where(white?: is_white).first
     original_position = king.position
     king.all_possible_moves.each do |possible_move|
       king.position = possible_move
-      if (is_white and white_in_check? == false) or (!is_white and black_in_check? == false)
+      if (is_white and in_check?('white') == false) or (!is_white and in_check?('black') == false)
         king.position = original_position
         return false
       end
@@ -70,35 +85,5 @@ class Board < ActiveRecord::Base
       raise 'Invalid Move'
     end
     removed_piece.destroy
-  end
-
-  def white_in_check?
-    white_king = King.where(white?: true).first
-    pawns = Pawn.where(white?: false)
-    rooks = Rook.where(white?: false)
-    knights = Knight.where(white?: false)
-    bishops = Bishop.where(white?: false)
-    queen = Queen.where(white?: false)
-    king = King.where(white?: false)
-    opponent_pieces = pawns + rooks + knights + bishops + queen + king
-    opponent_pieces.each do |piece|
-      return true if piece.possible_move? white_king.position
-    end
-    return false
-  end
-
-  def black_in_check?
-    black_king = King.where(white?: false).first
-    pawns = Pawn.where(white?: true)
-    rooks = Rook.where(white?: true)
-    knights = Knight.where(white?: true)
-    bishops = Bishop.where(white?: true)
-    queen = Queen.where(white?: true)
-    king = King.where(white?: true)
-    opponent_pieces = pawns + rooks + knights + bishops + queen + king
-    opponent_pieces.each do |piece|
-      return true if piece.possible_move? black_king.position
-    end
-    return false
   end
 end

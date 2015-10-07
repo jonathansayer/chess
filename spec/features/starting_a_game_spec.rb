@@ -72,5 +72,4 @@ feature 'Moving a piece' do
     player.move pawn, 'B3'
     expect(Pawn.where(white?:false, position:'A3')).to_not exist
   end
-
 end

@@ -112,7 +112,7 @@ describe Board do
       rook_class = class_double('Rook').as_stubbed_const(:transfer_nested_constants => true)
       allow(rook_class).to receive(:where).with({:white? => false}){[rook]}
       allow(rook_class).to receive(:where).with({:white? => true})
-      expect(subject.in_check?).to eq true
+      expect(subject.in_check? 'white').to eq true
     end
 
     it 'should know when a white king is not in cheque from the opposite colour' do
@@ -122,8 +122,7 @@ describe Board do
       allow(white_rook).to receive(:possible_move?) {false}
       rook_class = class_double('Rook').as_stubbed_const(:transfer_nested_constants => true)
       allow(rook_class).to receive(:where).with({:white? => false}){[black_rook]}
-      allow(rook_class).to receive(:where).with({:white? => true}) {[white_rook]}
-      expect(subject.in_check?).to eq false
+      expect(subject.in_check? 'white').to eq false
     end
 
     it 'should know when a black king is in check from a white piece' do
@@ -133,8 +132,7 @@ describe Board do
       allow(black_rook).to receive(:possible_move?) {false}
       rook_class = class_double('Rook').as_stubbed_const
       allow(rook_class).to receive(:where).with({:white? => true}){[white_rook]}
-      allow(rook_class).to receive(:where).with({:white? => false}){[black_rook]}
-      expect(subject.in_check?).to eq true
+      expect(subject.in_check? 'black').to eq true
     end
   end
 
