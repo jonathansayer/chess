@@ -2,8 +2,7 @@ require 'rails_helper'
 
 describe Player do
 
-
-    let(:subject) {Player.new('white')}
+  let(:subject) {Player.create(colour:'white', status:'playing')}
 
   it 'must have an associated colour' do
     expect(subject.colour).to eq 'white'

@@ -6,7 +6,7 @@ class Board < ActiveRecord::Base
   has_many :kings
   has_many :queens
   has_many :cells
-  has_many :players
+
 
   def move_piece piece, new_position
     @piece = piece
