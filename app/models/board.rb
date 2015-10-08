@@ -46,14 +46,13 @@ class Board < ActiveRecord::Base
     original_position = king.position
     king.all_possible_moves.each do |possible_move|
       king.position = possible_move
-      if (is_white and in_check?('white') == false) or (!is_white and in_check?('black') == false)
+      if (is_white and !in_check?('white')) or (!is_white and !in_check?('black'))
         king.position = original_position
         return false
       end
     end
     return true
   end
-
 
   private
 
