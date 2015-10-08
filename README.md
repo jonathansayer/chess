@@ -56,3 +56,12 @@ $ board = Board.first
 $ board.in_check? 'white' # to check if white is in check, 'black' can also be entered as an argument.
 $ board.check_mate? 'black' # to check if black is in check mate.
 ```
+
+#### Tests
+
+Tests were written in the Rspec testing suite. To run all tests use the rspec command to run the whole suite, or follow rspec with a file path to run tests in isolation. 
+
+```
+$ rpec
+$ rspec <-file_path->
+```
