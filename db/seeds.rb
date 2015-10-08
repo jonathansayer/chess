@@ -1,10 +1,3 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
 
 Pawn.create(position:'A2', white?: true)
 Pawn.create(position:'B2', white?: true)
@@ -51,3 +44,75 @@ Queen.create(position:'E8', white?:false)
 King.create(position:'D8', white?:false)
 
 Board.create
+
+Cell.create(position:'A1', occupied?:true)
+Cell.create(position:'B1', occupied?:true)
+Cell.create(position:'C1', occupied?:true)
+Cell.create(position:'D1', occupied?:true)
+Cell.create(position:'E1', occupied?:true)
+Cell.create(position:'F1', occupied?:true)
+Cell.create(position:'G1', occupied?:true)
+Cell.create(position:'H1', occupied?:true)
+
+Cell.create(position:'A2', occupied?:true)
+Cell.create(position:'B2', occupied?:true)
+Cell.create(position:'C2', occupied?:true)
+Cell.create(position:'D2', occupied?:true)
+Cell.create(position:'E2', occupied?:true)
+Cell.create(position:'F2', occupied?:true)
+Cell.create(position:'G2', occupied?:true)
+Cell.create(position:'H2', occupied?:true)
+
+Cell.create(position:'A3', occupied?:false)
+Cell.create(position:'B3', occupied?:false)
+Cell.create(position:'C3', occupied?:false)
+Cell.create(position:'D3', occupied?:false)
+Cell.create(position:'E3', occupied?:false)
+Cell.create(position:'F3', occupied?:false)
+Cell.create(position:'G3', occupied?:false)
+Cell.create(position:'H3', occupied?:false)
+
+Cell.create(position:'A4', occupied?:false)
+Cell.create(position:'B4', occupied?:false)
+Cell.create(position:'C4', occupied?:false)
+Cell.create(position:'D4', occupied?:false)
+Cell.create(position:'E4', occupied?:false)
+Cell.create(position:'F4', occupied?:false)
+Cell.create(position:'G4', occupied?:false)
+Cell.create(position:'H4', occupied?:false)
+
+Cell.create(position:'A5', occupied?:false)
+Cell.create(position:'B5', occupied?:false)
+Cell.create(position:'C5', occupied?:false)
+Cell.create(position:'D5', occupied?:false)
+Cell.create(position:'E5', occupied?:false)
+Cell.create(position:'F5', occupied?:false)
+Cell.create(position:'G5', occupied?:false)
+Cell.create(position:'H5', occupied?:false)
+
+Cell.create(position:'A6', occupied?:false)
+Cell.create(position:'B6', occupied?:false)
+Cell.create(position:'C6', occupied?:false)
+Cell.create(position:'D6', occupied?:false)
+Cell.create(position:'E6', occupied?:false)
+Cell.create(position:'F6', occupied?:false)
+Cell.create(position:'G6', occupied?:false)
+Cell.create(position:'H6', occupied?:false)
+
+Cell.create(position:'A7', occupied?:true)
+Cell.create(position:'B7', occupied?:true)
+Cell.create(position:'C7', occupied?:true)
+Cell.create(position:'D7', occupied?:true)
+Cell.create(position:'E7', occupied?:true)
+Cell.create(position:'F7', occupied?:true)
+Cell.create(position:'G7', occupied?:true)
+Cell.create(position:'H7', occupied?:true)
+
+Cell.create(position:'A8', occupied?:true)
+Cell.create(position:'B8', occupied?:true)
+Cell.create(position:'C8', occupied?:true)
+Cell.create(position:'D8', occupied?:true)
+Cell.create(position:'E8', occupied?:true)
+Cell.create(position:'F8', occupied?:true)
+Cell.create(position:'G8', occupied?:true)
+Cell.create(position:'H8', occupied?:true)
