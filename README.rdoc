@@ -47,35 +47,10 @@ $ player.move pawn, 'A3'
 ```
 
 Piece's will be taken off the board when another piece occupies the cell they are in.
- 
+To check the status if a player is in check or check mate, the board has to be queried first.
 
-
-== README
-
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+```
+$ board = Board.first
+$ board.in_check? 'white' # to check if white is in check, 'black' can also be entered as an argument.
+$ board.check_mate? 'black' # to check if black is in check mate.
+```
