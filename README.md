@@ -1,4 +1,4 @@
-==Chess Game on Rails
+##Chess Game on Rails
 
 This repo contains the skeleton backend logic in order to produce an online
 chess application. The aim is to turn this logic into a Rails Api and build
@@ -6,7 +6,7 @@ a javascript application to work in tandem with the API.
 
 The application was built using ruby 2.2.2.
 
-****How to Run the Application
+####How to Run the Application
 
 Once the Repo has been cloned, the relevant gems need to downloaded. If you have
 bundler install, you can do this by using the bundle command in terminal:
