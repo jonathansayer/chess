@@ -11,7 +11,9 @@ The application was built using ruby 2.2.2.
 Once the Repo has been cloned, the relevant gems need to downloaded. If you have
 bundler install, you can do this by using the bundle command in terminal:
 
-```$ bundle```
+```
+$ bundle
+```
 
 The database then needs to created, migrated and seeded. To do this use the following commands
 in terminal:
