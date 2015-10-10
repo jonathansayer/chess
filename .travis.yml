@@ -1,5 +1,13 @@
 language: ruby
-rvm: '2.2.2'
-
+rvm:
+  -2.2.2
 script:
     - bundle exec rspec spec
+    - RAILS_ENV=test bundle exec rake db:migrate --trace
+    - bundle exec rake db:test:prepare
+env:
+  - DB=postgresql
+before_script:
+  - psql -e 'create database chess_test'
+  - psql -c 'create database chess_test' -U postgres
+bundler_args: --binstubs=./bundler_stubs
