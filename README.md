@@ -1,5 +1,7 @@
 ##Chess Game on Rails
 
+![Travis_CI_builder](https://travis-ci.org/jonathansayer/chess.svg?branch=master)
+
 This repo contains the skeleton backend logic in order to produce an online
 chess application. The aim is to turn this logic into a Rails Api and build
 a javascript application to work in tandem with the API.
