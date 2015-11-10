@@ -10,8 +10,8 @@ class Board < ActiveRecord::Base
 
   def move_piece piece, new_position
     @piece = piece
-    old_position = piece.position
-    piece.move_to new_position
+    old_position = @piece.position
+    @piece.move_to new_position
     occupy_cell_at new_position
     leave_cell_at old_position
   end
