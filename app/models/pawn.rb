@@ -8,8 +8,7 @@ class Pawn < ActiveRecord::Base
 
   def possible_move? new_position
     @new_position = new_position
-    return false if invalid_move?
-    true
+    !invalid_move?
   end
 
   private
