@@ -35,8 +35,8 @@ class Pawn < ActiveRecord::Base
   end
 
   def move_limit
-    return 2 if current_coords[1] == 2
-    return 1
+    return 1 unless current_coords[1] == 2
+    2
   end
 
   def cell_infront_occupied?
