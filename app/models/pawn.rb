@@ -42,7 +42,8 @@ class Pawn < ActiveRecord::Base
   def cell_infront_occupied?
     in_front = Cell.find_by(position: @cell_in_front_position)
     new_position = Cell.find_by(position: @new_position)
-    true if in_front.occupied? or (new_position.occupied? and vertical_move?)
+    return false unless in_front.occupied? or (new_position.occupied? and vertical_move?)
+    true
   end
 
   def current_coords
