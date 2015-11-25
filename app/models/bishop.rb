@@ -32,8 +32,8 @@ class Bishop < ActiveRecord::Base
   def any_pieces_on_path?
     index = 0
     loop do
-      break if range_in('x')[index] == nil or range_in('y')[index] == nil
-      piece_position_path = ConvertCoordinates.to_alphabetical_coords [range_in('x')[index], range_in('y')[index]]
+      break if range_in(0)[index] == nil or range_in(1)[index] == nil
+      piece_position_path = ConvertCoordinates.to_alphabetical_coords [range_in(0)[index], range_in(1)[index]]
       index += 1
       cell = Cell.find_by(position: piece_position_path)
       if cell.position != self.position and cell != @new_position and cell.occupied?
@@ -42,9 +42,7 @@ class Bishop < ActiveRecord::Base
     end
   end
 
-  def range_in dimension
-    index = 0
-    index = 1 if dimension == 'y'
+  def range_in index
     coordinates_in_path = ((current_coords[index])..new_coords[index]).to_a
     if current_coords[index] > new_coords[index]
       coordinates_in_path = current_coords[index].downto(new_coords[index]).to_a
