@@ -24,12 +24,12 @@ class Pawn < ActiveRecord::Base
   end
 
   def vertical_move?
-    return false if new_coords[1] - current_coords[1] > move_limit
+    return false if move_length(1) > move_limit
     new_coords[0] == current_coords[0]
   end
 
   def diagonal_move?
-    return false if new_coords[0] - current_coords[0] > 1
+    return false if move_length(0) > 1
     return false if Cell.find_by(position: @new_position).occupied? == false
     ((current_coords[0] - new_coords[0]).abs == (current_coords[1] - new_coords[1]).abs)
   end
@@ -51,5 +51,9 @@ class Pawn < ActiveRecord::Base
 
   def new_coords
     ConvertCoordinates.to_numerical_coords @new_position
+  end
+
+  def move_length index
+    new_coords[index] - current_coords[index]
   end
 end
