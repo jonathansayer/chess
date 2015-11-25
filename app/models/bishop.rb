@@ -8,20 +8,17 @@ class Bishop < ActiveRecord::Base
   end
 
   def possible_move?
-    return false if invalid_move?
-    return true
+    return true unless invalid_move?
   end
 
   private
 
   def invalid_move?
     return true unless diagonal_move? and !any_pieces_on_path?
-    return false
   end
 
   def diagonal_move?
     return ((current_coords[0] - new_coords[0]).abs == (current_coords[1] - new_coords[1]).abs)
-
   end
 
   def current_coords
@@ -43,7 +40,6 @@ class Bishop < ActiveRecord::Base
         return true if cell.occupied?
       end
     end
-    return false
   end
 
   def x_range
