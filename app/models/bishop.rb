@@ -32,30 +32,24 @@ class Bishop < ActiveRecord::Base
   def any_pieces_on_path?
     index = 0
     loop do
-      break if x_range[index] == nil or y_range[index] == nil
-      piece_position_path = ConvertCoordinates.to_alphabetical_coords [x_range[index], y_range[index]]
+      break if range_in('x')[index] == nil or range_in('y')[index] == nil
+      piece_position_path = ConvertCoordinates.to_alphabetical_coords [range_in('x')[index], range_in('y')[index]]
       index += 1
       cell = Cell.find_by(position: piece_position_path)
-      if cell.position != self.position and cell != @new_position
-        return true if cell.occupied?
+      if cell.position != self.position and cell != @new_position and cell.occupied?
+        return true
       end
     end
   end
 
-  def x_range
-    x_coordinates_in_path = ((current_coords[0])..new_coords[0]).to_a
-    if current_coords[0] > new_coords[0]
-      x_coordinates_in_path = current_coords[0].downto(new_coords[0]).to_a
+  def range_in dimension
+    index = 0
+    index = 1 if dimension == 'y'
+    coordinates_in_path = ((current_coords[index])..new_coords[index]).to_a
+    if current_coords[index] > new_coords[index]
+      coordinates_in_path = current_coords[index].downto(new_coords[index]).to_a
     end
-    return x_coordinates_in_path
-  end
-
-  def y_range
-    y_coordinates_in_path = ((current_coords[1])..new_coords[1]).to_a
-    if current_coords[1] > new_coords[1]
-      y_coordinates_in_path = current_coords[1].downto(new_coords[1]).to_a
-    end
-    return y_coordinates_in_path
+    coordinates_in_path
   end
 
   def move_length index
