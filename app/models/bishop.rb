@@ -18,7 +18,7 @@ class Bishop < ActiveRecord::Base
   end
 
   def diagonal_move?
-    return ((current_coords[0] - new_coords[0]).abs == (current_coords[1] - new_coords[1]).abs)
+    move_length(0) == move_length(1)
   end
 
   def current_coords
@@ -57,4 +57,9 @@ class Bishop < ActiveRecord::Base
     end
     return y_coordinates_in_path
   end
+
+  def move_length index
+    (current_coords[index] - new_coords[index]).abs
+  end
+
 end
