@@ -26,17 +26,13 @@ class King < ActiveRecord::Base
   def move_in_dimension? index
     i = 0 if index == 1
     i = 1 if index == 0
-    return false if move_length(i) > move_limit
+    return false if move_length(i) > 1
     new_coords[index] == current_coords[index]
   end
 
   def diagonal_move?
     return false if move_length(0) > 1 or move_length(1) > 1
     move_length(0) == move_length(1)
-  end
-
-  def move_limit
-    1
   end
 
   def move_length index
