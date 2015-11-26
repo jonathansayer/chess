@@ -13,7 +13,7 @@ class King < ActiveRecord::Base
   end
 
   def possible_move?
-    return false if @new_position == self.position
+    return false unless @new_position != self.position
     true if move_in_dimension?(1) or move_in_dimension?(0) or diagonal_move?
   end
 
