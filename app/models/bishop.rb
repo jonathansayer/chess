@@ -32,13 +32,11 @@ class Bishop < ActiveRecord::Base
   def any_pieces_on_path?
     index = 0
     loop do
-      break if range_in(0)[index] == nil or range_in(1)[index] == nil
+      break unless range_in(0)[index] != nil or range_in(1)[index] != nil
       piece_position_path = ConvertCoordinates.to_alphabetical_coords [range_in(0)[index], range_in(1)[index]]
       index += 1
       cell = Cell.find_by(position: piece_position_path)
-      if piece_on_cell? cell
-        return true
-      end
+      return true if piece_on_cell? cell
     end
   end
 
