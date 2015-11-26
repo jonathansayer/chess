@@ -42,7 +42,7 @@ class Queen < ActiveRecord::Base
     end
 
     def piece_in_the_y_range?
-      y_range.each do |y_coord|
+      range(1).each do |y_coord|
         path_position = ConvertCoordinates.to_alphabetical_coords [current_coords[0],y_coord]
         if path_position != self.position and path_position != @new_position
           return true if Cell.find_by(position: path_position).occupied?
@@ -64,8 +64,8 @@ class Queen < ActiveRecord::Base
     def pieces_on_diagonal_path?
       index = 0
       loop do
-        break if range(0)[index] == nil or y_range[index] == nil
-        piece_position_path = ConvertCoordinates.to_alphabetical_coords [range(0)[index], y_range[index]]
+        break if range(0)[index] == nil or range(1)[index] == nil
+        piece_position_path = ConvertCoordinates.to_alphabetical_coords [range(0)[index], range(1)[index]]
         index += 1
         cell = Cell.find_by(position: piece_position_path)
         if cell.position != self.position and cell != @new_position
@@ -73,22 +73,6 @@ class Queen < ActiveRecord::Base
         end
       end
       false
-    end
-
-    def x_range
-      x_coordinates_in_path = ((current_coords[0])..new_coords[0]).to_a
-      if current_coords[0] > new_coords[0]
-        x_coordinates_in_path = current_coords[0].downto(new_coords[0]).to_a
-      end
-      x_coordinates_in_path
-    end
-
-    def y_range
-      y_coordinates_in_path = (current_coords[1]..new_coords[1]).to_a
-      if current_coords[1] > new_coords[1]
-        y_coordinates_in_path = current_coords[1].downto(new_coords[1]).to_a
-      end
-      y_coordinates_in_path
     end
 
     def range index
