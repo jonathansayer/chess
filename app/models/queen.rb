@@ -8,9 +8,8 @@ class Queen < ActiveRecord::Base
   end
 
   def possible_move?
-    return false unless horizonatal_move? or vertical_move? or diagonal_move?
-    return false if piece_in_path?
-    return true
+    return false unless !piece_in_path?
+    horizonatal_move? or vertical_move? or diagonal_move?
   end
 
   private
