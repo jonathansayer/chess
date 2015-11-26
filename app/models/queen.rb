@@ -9,17 +9,13 @@ class Queen < ActiveRecord::Base
 
   def possible_move?
     return false unless !piece_in_path?
-    horizonatal_move? or vertical_move? or diagonal_move?
+    vertical_or_horizontal_move? or diagonal_move?
   end
 
   private
 
-    def horizonatal_move?
-      new_coords[1] == current_coords[1]
-    end
-
-    def vertical_move?
-      new_coords[0] == current_coords[0]
+    def vertical_or_horizontal_move?
+      new_coords[1] == current_coords[1] or new_coords[0] == current_coords[0]
     end
 
     def diagonal_move?
@@ -35,8 +31,8 @@ class Queen < ActiveRecord::Base
     end
 
     def piece_in_path?
-      return true if vertical_move? and piece_in_range?(1)
-      return true if horizonatal_move? and piece_in_range?(0)
+      return true if vertical_or_horizontal_move? and piece_in_range?(1)
+      return true if vertical_or_horizontal_move? and piece_in_range?(0)
       return true if diagonal_move? and pieces_on_diagonal_path?
       false
     end
