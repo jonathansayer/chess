@@ -19,8 +19,7 @@ class King < ActiveRecord::Base
 
   def possible_move?
     return false if @new_position == self.position
-    return true if horizonatal_move? or vertical_move? or diagonal_move?
-    false
+    true if horizonatal_move? or vertical_move? or diagonal_move?
   end
 
   private
