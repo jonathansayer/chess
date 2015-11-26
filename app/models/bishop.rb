@@ -36,7 +36,7 @@ class Bishop < ActiveRecord::Base
       piece_position_path = ConvertCoordinates.to_alphabetical_coords [range_in(0)[index], range_in(1)[index]]
       index += 1
       cell = Cell.find_by(position: piece_position_path)
-      if cell.position != self.position and cell != @new_position and cell.occupied?
+      if piece_on_cell? cell
         return true
       end
     end
@@ -52,6 +52,10 @@ class Bishop < ActiveRecord::Base
 
   def move_length index
     (current_coords[index] - new_coords[index]).abs
+  end
+
+  def piece_on_cell? cell
+    cell.position != self.position and cell != @new_position and cell.occupied?
   end
 
 end
