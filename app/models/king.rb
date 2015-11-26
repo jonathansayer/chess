@@ -8,11 +8,7 @@ class King < ActiveRecord::Base
   end
 
   def all_possible_moves
-    possible_moves = []
-    Cell.all.each do |cell|
-      @new_position = cell.position
-      possible_moves.push(cell.position) if possible_move?
-    end
+    determine_possible_moves(possible_moves = [])
     possible_moves
   end
 
@@ -22,6 +18,13 @@ class King < ActiveRecord::Base
   end
 
   private
+
+  def determine_possible_moves array
+    Cell.all.each do |cell|
+      @new_position = cell.position
+      array.push(cell.position) if possible_move?
+    end
+  end
 
   def move_in_dimension? index
     i = 0 if index == 1
