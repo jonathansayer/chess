@@ -9,8 +9,7 @@ class King < ActiveRecord::Base
 
   def all_possible_moves
     possible_moves = []
-    cells = Cell.all
-    cells.each do |cell|
+    Cell.all.each do |cell|
       @new_position = cell.position
       possible_moves.push(cell.position) if possible_move?
     end
