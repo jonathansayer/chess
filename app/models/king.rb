@@ -25,8 +25,8 @@ class King < ActiveRecord::Base
   private
 
   def horizonatal_move?
-      return false if (new_coords[0] - current_coords[0]).abs > move_limit
-      new_coords[1] == current_coords[1]
+    return false if (new_coords[0] - current_coords[0]).abs > move_limit
+    new_coords[1] == current_coords[1]
   end
 
   def vertical_move?
