@@ -8,25 +8,17 @@ class Knight < ActiveRecord::Base
   end
 
   def possible_move?
-    (move_two_horizontally? and move_one_vertically?) or (move_two_vertically? and move_one_horizontally?)
+    (move_two_in_dimension?(0) and move_one_in_dimension?(1)) or (move_two_in_dimension?(1) and move_one_in_dimension?(0))
   end
 
   private
 
-    def move_two_horizontally?
-      move_length(0) == 2
+    def move_two_in_dimension? index
+      move_length(index) == 2
     end
 
-    def move_one_horizontally?
-      move_length(0) == 1
-    end
-
-    def move_two_vertically?
-      move_length(1) == 2
-    end
-
-    def move_one_vertically?
-      move_length(1) == 1
+    def move_one_in_dimension? index
+      move_length(index) == 1
     end
 
     def move_length index
