@@ -27,7 +27,7 @@ class King < ActiveRecord::Base
   end
 
   def move_in_dimension? index
-    i = 0 if index == 1
+    i = 0
     i = 1 if index == 0
     return false if move_length(i) > 1
     new_coords[index] == current_coords[index]
