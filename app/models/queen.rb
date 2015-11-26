@@ -19,7 +19,11 @@ class Queen < ActiveRecord::Base
     end
 
     def diagonal_move?
-      ((current_coords[0] - new_coords[0]).abs == (current_coords[1] - new_coords[1]).abs)
+      move_length(0) == move_length(1)
+    end
+
+    def move_length index
+      (current_coords[index] - new_coords[index]).abs
     end
 
     def current_coords
@@ -31,8 +35,7 @@ class Queen < ActiveRecord::Base
     end
 
     def piece_in_path?
-      return true if vertical_or_horizontal_move? and piece_in_range?(1)
-      return true if vertical_or_horizontal_move? and piece_in_range?(0)
+      return true if vertical_or_horizontal_move? and (piece_in_range?(0) or piece_in_range?(1))
       return true if diagonal_move? and pieces_on_diagonal_path?
       false
     end
@@ -42,9 +45,7 @@ class Queen < ActiveRecord::Base
       range(index).each do |coord|
         coordinates[index] = coord
         path_position = ConvertCoordinates.to_alphabetical_coords coordinates
-        if path_position != self.position and path_position != @new_position
-          return true if Cell.find_by(position: path_position).occupied?
-        end
+        return true if path_position != self.position and path_position != @new_position and Cell.find_by(position: path_position).occupied?
       end
       false
     end
