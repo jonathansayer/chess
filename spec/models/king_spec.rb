@@ -147,18 +147,6 @@ describe King do
   end
 
   it 'should be able to list all possible moves?' do
-    Cell.create(position:'C3')
-    Cell.create(position:'D3')
-    Cell.create(position:'E3')
-    Cell.create(position:'E4')
-    Cell.create(position:'E5')
-    Cell.create(position:'E6')
-    Cell.create(position:'D5')
-    Cell.create(position:'D6')
-    Cell.create(position:'C5')
-    Cell.create(position:'C4')
-    Cell.create(position:'B2')
-    Cell.create(position:'D4')
-    expect(subject.all_possible_moves).to eq ['C3','D3','E3','E4','E5', 'D5','C5','C4']
+    expect(subject.all_possible_moves).to eq ['C3','D3','E3','C4','E4', 'C5','D5','E5']
   end
 end
