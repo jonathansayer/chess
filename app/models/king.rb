@@ -18,28 +18,29 @@ class King < ActiveRecord::Base
 
   def possible_move?
     return false if @new_position == self.position
-    true if horizonatal_move? or vertical_move? or diagonal_move?
+    true if move_in_dimension?(1) or move_in_dimension?(0) or diagonal_move?
   end
 
   private
 
-  def horizonatal_move?
-    return false if (new_coords[0] - current_coords[0]).abs > move_limit
-    new_coords[1] == current_coords[1]
-  end
-
-  def vertical_move?
-    return false if (new_coords[1] - current_coords[1]).abs > move_limit
-    new_coords[0] == current_coords[0]
+  def move_in_dimension? index
+    i = 0 if index == 1
+    i = 1 if index == 0
+    return false if (new_coords[i] - current_coords[i]).abs > move_limit
+    new_coords[index] == current_coords[index]
   end
 
   def diagonal_move?
-    return false if (new_coords[0] - current_coords[0]).abs > 1 or (new_coords[1] - current_coords[1]).abs > 1
-    ((current_coords[0] - new_coords[0]).abs == (current_coords[1] - new_coords[1]).abs)
+    return false if move_length(0) > 1 or move_length(1) > 1
+    move_length(0) == move_length(1)
   end
 
   def move_limit
     1
+  end
+
+  def move_length index
+    (current_coords[index] - new_coords[index]).abs
   end
 
   def current_coords
