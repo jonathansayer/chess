@@ -15,15 +15,15 @@ class Queen < ActiveRecord::Base
   private
 
     def horizonatal_move?
-        return new_coords[1] == current_coords[1]
+      new_coords[1] == current_coords[1]
     end
 
     def vertical_move?
-      return new_coords[0] == current_coords[0]
+      new_coords[0] == current_coords[0]
     end
 
     def diagonal_move?
-      return ((current_coords[0] - new_coords[0]).abs == (current_coords[1] - new_coords[1]).abs)
+      ((current_coords[0] - new_coords[0]).abs == (current_coords[1] - new_coords[1]).abs)
     end
 
     def current_coords
@@ -38,7 +38,7 @@ class Queen < ActiveRecord::Base
       return true if vertical_move? and piece_in_the_y_range?
       return true if horizonatal_move? and piece_in_the_x_range?
       return true if diagonal_move? and pieces_on_diagonal_path?
-      return false
+      false
     end
 
     def piece_in_the_y_range?
@@ -48,7 +48,7 @@ class Queen < ActiveRecord::Base
           return true if Cell.find_by(position: path_position).occupied?
         end
       end
-      return false
+      false
     end
 
     def piece_in_the_x_range?
@@ -58,7 +58,7 @@ class Queen < ActiveRecord::Base
           return true if Cell.find_by(position: path_position).occupied?
         end
       end
-      return false
+      false
     end
 
     def pieces_on_diagonal_path?
@@ -72,7 +72,7 @@ class Queen < ActiveRecord::Base
           return true if cell.occupied?
         end
       end
-      return false
+      false
     end
 
     def x_range
@@ -80,7 +80,7 @@ class Queen < ActiveRecord::Base
       if current_coords[0] > new_coords[0]
         x_coordinates_in_path = current_coords[0].downto(new_coords[0]).to_a
       end
-      return x_coordinates_in_path
+      x_coordinates_in_path
     end
 
     def y_range
@@ -89,7 +89,7 @@ class Queen < ActiveRecord::Base
       if current_coords[1] > new_coords[1]
         y_coordinates_in_path = current_coords[1].downto(new_coords[1]).to_a
       end
-      return y_coordinates_in_path
+      y_coordinates_in_path
     end
 
 
