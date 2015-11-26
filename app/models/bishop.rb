@@ -33,9 +33,9 @@ class Bishop < ActiveRecord::Base
     index = 0
     loop do
       break unless range_in(0)[index] != nil or range_in(1)[index] != nil
-      piece_position_path = ConvertCoordinates.to_alphabetical_coords [range_in(0)[index], range_in(1)[index]]
+      piece_position_on_path = ConvertCoordinates.to_alphabetical_coords [range_in(0)[index], range_in(1)[index]]
       index += 1
-      cell = Cell.find_by(position: piece_position_path)
+      cell = Cell.find_by(position: piece_position_on_path)
       return true if piece_on_cell? cell
     end
   end
