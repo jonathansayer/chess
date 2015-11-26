@@ -14,19 +14,23 @@ class Knight < ActiveRecord::Base
   private
 
     def move_two_horizontally?
-      (current_coords[0] - new_coords[0]).abs == 2
+      move_length(0) == 2
     end
 
     def move_one_horizontally?
-      (current_coords[0] - new_coords[0]).abs == 1
+      move_length(0) == 1
     end
 
     def move_two_vertically?
-      (current_coords[1] - new_coords[1]).abs == 2
+      move_length(1) == 2
     end
 
     def move_one_vertically?
-      (current_coords[1] - new_coords[1]).abs == 1
+      move_length(1) == 1
+    end
+
+    def move_length index
+      (current_coords[index] - new_coords[index]).abs
     end
 
     def current_coords
