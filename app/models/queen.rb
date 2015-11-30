@@ -35,17 +35,20 @@ class Queen < ActiveRecord::Base
     end
 
     def piece_in_path?
-      return true if vertical_or_horizontal_move? and (piece_in_range?(0) or piece_in_range?(1))
+      return true if vertical_or_horizontal_move? and piece_in_range?
       return true if diagonal_move? and pieces_on_diagonal_path?
       false
     end
 
-    def piece_in_range? index
-      coordinates = current_coords
-      range(index).each do |coord|
-        coordinates[index] = coord
-        path_position = ConvertCoordinates.to_alphabetical_coords coordinates
-        return true if path_position != self.position and path_position != @new_position and Cell.find_by(position: path_position).occupied?
+    def piece_in_range?
+      index = [0,1]
+      index.each do |i|
+        coordinates = current_coords
+        range(i).each do |coord|
+          coordinates[i] = coord
+          path_position = ConvertCoordinates.to_alphabetical_coords coordinates
+          return true if path_position != self.position and path_position != @new_position and Cell.find_by(position: path_position).occupied?
+        end
       end
       false
     end
