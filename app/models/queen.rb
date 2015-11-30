@@ -61,14 +61,18 @@ class Queen < ActiveRecord::Base
       index = 0
       loop do
         break if range(0)[index] == nil or range(1)[index] == nil
-        piece_position_path = ConvertCoordinates.to_alphabetical_coords [range(0)[index], range(1)[index]]
+        return true if piece_on_any_diagonal_cell?(index)
         index += 1
-        cell = Cell.find_by(position: piece_position_path)
-        if cell.position != self.position and cell != @new_position
-          return true if cell.occupied?
-        end
       end
       false
+    end
+
+    def piece_on_any_diagonal_cell? index
+      piece_position_path = ConvertCoordinates.to_alphabetical_coords [range(0)[index], range(1)[index]]
+      cell = Cell.find_by(position: piece_position_path)
+      if cell.position != self.position and cell != @new_position
+        return true if cell.occupied?
+      end
     end
 
     def range index
