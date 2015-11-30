@@ -60,7 +60,7 @@ class Queen < ActiveRecord::Base
     def pieces_on_diagonal_path?
       index = 0
       loop do
-        break if range(0)[index] == nil or range(1)[index] == nil
+        break unless range(0)[index] != nil or range(1)[index] != nil
         return true if piece_on_any_diagonal_cell?(index)
         index += 1
       end
@@ -70,9 +70,7 @@ class Queen < ActiveRecord::Base
     def piece_on_any_diagonal_cell? index
       piece_position_path = ConvertCoordinates.to_alphabetical_coords [range(0)[index], range(1)[index]]
       cell = Cell.find_by(position: piece_position_path)
-      if cell.position != self.position and cell != @new_position
-        return true if cell.occupied?
-      end
+      return true if cell.position != self.position and cell != @new_position and cell.occupied?
     end
 
     def range index
