@@ -43,12 +43,17 @@ class Queen < ActiveRecord::Base
     def piece_in_range?
       index = [0,1]
       index.each do |i|
-        coordinates = current_coords
-        range(i).each do |coord|
-          coordinates[i] = coord
-          path_position = ConvertCoordinates.to_alphabetical_coords coordinates
-          return true if path_position != self.position and path_position != @new_position and Cell.find_by(position: path_position).occupied?
-        end
+        return true if piece_on_any_cell?(i)
+      end
+      false
+    end
+
+    def piece_on_any_cell? index
+      coordinates = current_coords
+      range(index).each do |coord|
+        coordinates[index] = coord
+        path_position = ConvertCoordinates.to_alphabetical_coords coordinates
+        return true if path_position != self.position and path_position != @new_position and Cell.find_by(position: path_position).occupied?
       end
       false
     end
