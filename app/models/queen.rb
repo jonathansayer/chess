@@ -37,7 +37,6 @@ class Queen < ActiveRecord::Base
     def piece_in_path?
       return true if vertical_or_horizontal_move? and piece_in_range?
       return true if diagonal_move? and pieces_on_diagonal_path?
-      false
     end
 
     def piece_in_range?
