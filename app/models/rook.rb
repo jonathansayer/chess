@@ -8,8 +8,7 @@ class Rook < ActiveRecord::Base
 
   def possible_move? new_position
     @new_position = new_position
-    return false unless horizonatal_move? or vertical_move?
-    return false if piece_in_path?
+    return false unless (horizonatal_move? or vertical_move?) and !piece_in_path?
     return true
   end
 
