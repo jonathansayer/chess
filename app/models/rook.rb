@@ -37,7 +37,7 @@ class Rook < ActiveRecord::Base
   end
 
   def piece_in_the_y_range?
-    y_range.each do |y_coord|
+    range_in(1).each do |y_coord|
       path_position = ConvertCoordinates.to_alphabetical_coords [current_coords[0],y_coord]
       if path_position != self.position and path_position != @new_position
         return true if Cell.find_by(position: path_position).occupied?
@@ -47,7 +47,7 @@ class Rook < ActiveRecord::Base
   end
 
   def piece_in_the_x_range?
-    x_range.each do |x_coord|
+    range_in(0).each do |x_coord|
       path_position = ConvertCoordinates.to_alphabetical_coords [x_coord,current_coords[1]]
       if path_position != self.position and path_position != @new_position
         return true if Cell.find_by(position: path_position).occupied?
@@ -56,19 +56,12 @@ class Rook < ActiveRecord::Base
     return false
   end
 
-  def x_range
-    x_coordinates_in_path = ((current_coords[0])..new_coords[0]).to_a
-    if current_coords[0] > new_coords[0]
-      x_coordinates_in_path = current_coords[0].downto(new_coords[0]).to_a
+  def range_in index
+    coordinates_in_path = ((current_coords[index])..new_coords[index]).to_a
+    if current_coords[index] > new_coords[index]
+      coordinates_in_path = current_coords[index].downto(new_coords[index]).to_a
     end
-    return x_coordinates_in_path
+    return coordinates_in_path
   end
 
-  def y_range
-    y_coordinates_in_path = ((current_coords[1])..new_coords[1]).to_a
-    if current_coords[1] > new_coords[1]
-      y_coordinates_in_path = current_coords[1].downto(new_coords[1]).to_a
-    end
-    return y_coordinates_in_path
-  end
 end
