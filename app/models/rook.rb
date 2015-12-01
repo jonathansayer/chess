@@ -33,7 +33,7 @@ class Rook < ActiveRecord::Base
 
   def piece_in_range? index
     range_in(index).each do |coord|
-      return true if piece_on_cell?(coord, index)
+      return true if piece_on_cell?(coord, index) == true
     end
     false
   end
