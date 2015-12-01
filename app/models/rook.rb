@@ -8,18 +8,14 @@ class Rook < ActiveRecord::Base
 
   def possible_move? new_position
     @new_position = new_position
-    return false unless (horizonatal_move? or vertical_move?) and !piece_in_path?
+    return false unless (horizontal_or_vertical_move?) and !piece_in_path?
     return true
   end
 
   private
 
-  def horizonatal_move?
-    return new_coords[1] == current_coords[1]
-  end
-
-  def vertical_move?
-    return new_coords[0] == current_coords[0]
+  def horizontal_or_vertical_move?
+    new_coords[0] == current_coords[0] or new_coords[1] == current_coords[1]
   end
 
   def current_coords
@@ -31,8 +27,8 @@ class Rook < ActiveRecord::Base
   end
 
   def piece_in_path?
-    return true if piece_in_range?(1) and vertical_move?
-    return true if piece_in_range?(0) and horizonatal_move?
+    return true if piece_in_range?(1) and horizontal_or_vertical_move?
+    return true if piece_in_range?(0) and horizontal_or_vertical_move?
     return false
   end
 
