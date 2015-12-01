@@ -19,12 +19,9 @@ class ConvertCoordinates
 
   def self.to_alphabetical_coords *coords
     position_array = []
-    coords.each do |coordinate|
-      self.first_number_to_letter coordinate
-        position_array.push(@letter + coordinate.last.to_s)
-      end
-      return position_array.first if position_array.length == 1
-      position_array
+    self.convert_to_coords_string coords, position_array
+    return position_array.first if position_array.length == 1
+    position_array
   end
 
   private
@@ -35,6 +32,13 @@ class ConvertCoordinates
       x = @conversion_hash[split_position.first]
       y = split_position.last.to_i
       array.push([x,y])
+    end
+  end
+
+  def self.convert_to_coords_string  coords, array
+    coords.each do |coordinate|
+      self.first_number_to_letter coordinate
+      array.push(@letter + coordinate.last.to_s)
     end
   end
 
