@@ -29,23 +29,23 @@ class Rook < ActiveRecord::Base
   def piece_in_path?
     return true if piece_in_range?(1) and horizontal_or_vertical_move?
     return true if piece_in_range?(0) and horizontal_or_vertical_move?
-    false
   end
 
-
   def piece_in_range? index
-    coordinates = current_coords
     range_in(index).each do |coord|
-      coordinates[index] = coord
-      path_position = ConvertCoordinates.to_alphabetical_coords coordinates
-      if path_position != self.position and path_position != @new_position
-        return true if Cell.find_by(position: path_position).occupied?
-      end
+      return true if piece_on_cell?(coord, index)
     end
     false
   end
 
-
+  def piece_on_cell? coord, index
+    coordinates = current_coords
+    coordinates[index] = coord
+    path_position = ConvertCoordinates.to_alphabetical_coords coordinates
+    if path_position != self.position and path_position != @new_position
+      return true if Cell.find_by(position: path_position).occupied?
+    end
+  end
 
   def range_in index
     coordinates_in_path = ((current_coords[index])..new_coords[index]).to_a
