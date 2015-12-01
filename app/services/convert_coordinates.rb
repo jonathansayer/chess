@@ -12,12 +12,7 @@ class ConvertCoordinates
 
   def self.to_numerical_coords *positions
     coordinates = []
-    positions.each do |position|
-      split_position = position.split(//)
-      x = @conversion_hash[split_position.first]
-      y = split_position.last.to_i
-      coordinates.push([x,y])
-    end
+    self.convert_to_x_and_y positions, coordinates
     return coordinates.first if coordinates.length == 1
     coordinates
   end
@@ -33,6 +28,15 @@ class ConvertCoordinates
   end
 
   private
+
+  def self.convert_to_x_and_y positions, array
+    positions.each do |position|
+      split_position = position.split(//)
+      x = @conversion_hash[split_position.first]
+      y = split_position.last.to_i
+      array.push([x,y])
+    end
+  end
 
   def self.first_number_to_letter coords
     @conversion_hash.each do |key,value|
