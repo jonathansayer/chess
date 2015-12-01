@@ -31,14 +31,17 @@ class Rook < ActiveRecord::Base
   end
 
   def piece_in_path?
-    return true if piece_in_the_y_range? and vertical_move?
-    return true if piece_in_the_x_range? and horizonatal_move?
+    return true if piece_in_range?(1) and vertical_move?
+    return true if piece_in_range?(0) and horizonatal_move?
     return false
   end
 
-  def piece_in_the_y_range?
-    range_in(1).each do |y_coord|
-      path_position = ConvertCoordinates.to_alphabetical_coords [current_coords[0],y_coord]
+
+  def piece_in_range? index
+    coordinates = current_coords
+    range_in(index).each do |coord|
+      coordinates[index] = coord
+      path_position = ConvertCoordinates.to_alphabetical_coords coordinates
       if path_position != self.position and path_position != @new_position
         return true if Cell.find_by(position: path_position).occupied?
       end
@@ -46,15 +49,7 @@ class Rook < ActiveRecord::Base
     return false
   end
 
-  def piece_in_the_x_range?
-    range_in(0).each do |x_coord|
-      path_position = ConvertCoordinates.to_alphabetical_coords [x_coord,current_coords[1]]
-      if path_position != self.position and path_position != @new_position
-        return true if Cell.find_by(position: path_position).occupied?
-      end
-    end
-    return false
-  end
+
 
   def range_in index
     coordinates_in_path = ((current_coords[index])..new_coords[index]).to_a
