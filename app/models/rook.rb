@@ -41,9 +41,7 @@ class Rook < ActiveRecord::Base
     coordinates = current_coords
     coordinates[index] = coord
     path_position = ConvertCoordinates.to_alphabetical_coords coordinates
-    if not_end_of_path? path_position
-      return true if cell_occupied? path_position
-    end
+    return true if not_end_of_path? path_position and cell_occupied? path_position
   end
 
   def not_end_of_path? path_position
