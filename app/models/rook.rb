@@ -42,12 +42,16 @@ class Rook < ActiveRecord::Base
     coordinates[index] = coord
     path_position = ConvertCoordinates.to_alphabetical_coords coordinates
     if not_end_of_path? path_position
-      return true if Cell.find_by(position: path_position).occupied?
+      return true if cell_occupied? path_position
     end
   end
 
   def not_end_of_path? path_position
     path_position != self.position and path_position != @new_position
+  end
+
+  def cell_occupied? position
+    Cell.find_by(position: position).occupied?
   end
 
   def range_in index
