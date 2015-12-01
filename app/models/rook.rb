@@ -9,7 +9,7 @@ class Rook < ActiveRecord::Base
   def possible_move? new_position
     @new_position = new_position
     return false unless (horizontal_or_vertical_move?) and !piece_in_path?
-    return true
+    true
   end
 
   private
@@ -29,7 +29,7 @@ class Rook < ActiveRecord::Base
   def piece_in_path?
     return true if piece_in_range?(1) and horizontal_or_vertical_move?
     return true if piece_in_range?(0) and horizontal_or_vertical_move?
-    return false
+    false
   end
 
 
@@ -42,7 +42,7 @@ class Rook < ActiveRecord::Base
         return true if Cell.find_by(position: path_position).occupied?
       end
     end
-    return false
+    false
   end
 
 
@@ -52,7 +52,7 @@ class Rook < ActiveRecord::Base
     if current_coords[index] > new_coords[index]
       coordinates_in_path = current_coords[index].downto(new_coords[index]).to_a
     end
-    return coordinates_in_path
+    coordinates_in_path
   end
 
 end
