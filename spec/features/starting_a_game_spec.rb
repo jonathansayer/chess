@@ -4,10 +4,7 @@ feature 'Moving a piece' do
   scenario 'I should be able to move a pawn on the board from A2 to A3' do
     player = Player.create(name:'Jon',colour:'white', status: 'playing')
     Board.create
-    Cell.create(position: 'A2', occupied?: false)
-    Cell.create(position: 'A3', occupied?: false)
-    Cell.create(position: 'A4', occupied?: false)
-    pawn = Pawn.create(position:'A2', white?: true)
+    pawn = Pawn.find_by(position:'A2', white?: true)
     player.move pawn, 'A3'
     expect(pawn.position).to eq 'A3'
   end
@@ -15,10 +12,7 @@ feature 'Moving a piece' do
   scenario 'I should be able to move a pawn on the board from A2 to A4' do
     player = Player.create(name:'Jon',colour:'white', status: 'playing')
     Board.create
-    Cell.create(position: 'A2', occupied?: true)
-    Cell.create(position: 'A3', occupied?: false)
-    Cell.create(position: 'A4', occupied?: false)
-    pawn = Pawn.create(position:'A2', white?: true)
+    pawn = Pawn.find_by(position:'A2', white?: true)
     player.move pawn, 'A3'
     expect(pawn.position).to eq 'A3'
   end
@@ -26,11 +20,10 @@ feature 'Moving a piece' do
   scenario 'I should not be able to move a pawn if there is another piece infront' do
     player = Player.create(name:'Jon',colour:'white', status: 'playing')
     Board.create
-    Cell.create(position: 'A2', occupied?: true)
-    Cell.create(position: 'A3', occupied?: true)
-    Cell.create(position: 'B3', occupied?: false)
-    Cell.create(position: 'A4', occupied?: false)
-    pawn = Pawn.create(position:'A2', white?: true)
+    pawn = Pawn.find_by(position:'A2', white?: true)
+    pawn2 = Pawn.create(position:'A3', white?: true)
+    cell = Cell.find_by(position:'A3')
+    cell.change_occupied_mode
     expect{player.move pawn, 'A3'}.to raise_error "Invalid Move"
   end
 
