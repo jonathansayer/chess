@@ -43,14 +43,12 @@ feature 'Moving a piece' do
   scenario 'I should be able to take a piece off the board' do
     player = Player.create(name:'Jon',colour:'white', status: 'playing')
     Board.create
-    Cell.create(position: 'A2', occupied?: false)
-    Cell.create(position: 'A3', occupied?: false)
-    Cell.create(position: 'B3', occupied?: true)
-    Cell.create(position: 'A4', occupied?: false)
-    pawn = Pawn.create(position:'A2', white?: true)
+    pawn = Pawn.find_by(position:'A2', white?: true)
     Pawn.create(position:'B3', white?: false)
+    cell = Cell.find_by(position: 'B3')
+    cell.change_occupied_mode
     player.move pawn, 'B3'
-    expect(Pawn.where(white?:false, position:'A3')).to_not exist
+    expect(Pawn.where(white?:false, position:'B3')).to_not exist
   end
 
   scenario 'I should not be able to take a piece off the board if it is the same colour' do
