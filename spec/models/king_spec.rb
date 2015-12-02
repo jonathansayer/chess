@@ -6,8 +6,6 @@ describe King do
     subject.position = 'D4'
   end
 
-
-
   it 'should respond to position' do
     expect(subject).to respond_to :position
   end
@@ -146,7 +144,26 @@ describe King do
     end
   end
 
-  it 'should be able to list all possible moves?' do
-    expect(subject.all_possible_moves).to eq ['C3','D3','E3','C4','E4', 'C5','D5','E5']
+  context 'when listing posible moves' do
+
+    before(:each) do
+      Cell.create(position:'C3', occupied?: false)
+      Cell.create(position:'D3', occupied?: false)
+      Cell.create(position:'E3', occupied?: false)
+      Cell.create(position:'C4', occupied?: false)
+      Cell.create(position:'E4', occupied?: false)
+      Cell.create(position:'C5', occupied?: false)
+      Cell.create(position:'D5', occupied?: false)
+      Cell.create(position:'E5', occupied?: false)
+      Cell.create(position:'F6', occupied?: false)
+      Cell.create(position:'D9', occupied?: false)
+      Cell.create(position:'E8', occupied?: false)
+    end
+
+    it 'should be able to list all possible moves?' do
+      expect(subject.all_possible_moves).to eq ['C3','D3','E3','C4','E4', 'C5','D5','E5']
+    end
+
+
   end
 end
