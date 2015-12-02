@@ -163,7 +163,5 @@ describe King do
     it 'should be able to list all possible moves?' do
       expect(subject.all_possible_moves).to eq ['C3','D3','E3','C4','E4', 'C5','D5','E5']
     end
-
-
   end
 end
