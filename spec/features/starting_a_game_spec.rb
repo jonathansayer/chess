@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'Moving a piece' do
   scenario 'I should be able to move a pawn on the board from A2 to A3' do
     player = Player.create(name:'Jon',colour:'white', status: 'playing')
-    Board.create
+
     pawn = Pawn.find_by(position:'A2', white?: true)
     player.move pawn, 'A3'
     expect(pawn.position).to eq 'A3'
@@ -11,7 +11,7 @@ feature 'Moving a piece' do
 
   scenario 'I should be able to move a pawn on the board from A2 to A4' do
     player = Player.create(name:'Jon',colour:'white', status: 'playing')
-    Board.create
+    
     pawn = Pawn.find_by(position:'A2', white?: true)
     player.move pawn, 'A3'
     expect(pawn.position).to eq 'A3'
