@@ -13,5 +13,4 @@ class Player < ActiveRecord::Base
   def lose
     self.status = 'You Lost!'
   end
-
 end
