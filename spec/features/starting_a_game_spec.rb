@@ -30,12 +30,12 @@ feature 'Moving a piece' do
   scenario 'I should be able to move a pawn if there is another piece infront but another diagonal' do
     player = Player.create(name:'Jon',colour:'white', status: 'playing')
     Board.create
-    Cell.create(position: 'A2', occupied?: true)
-    Cell.create(position: 'A3', occupied?: true)
-    Cell.create(position: 'B3', occupied?: true)
-    Cell.create(position: 'A4', occupied?: false)
-    Rook.create(position: 'B3', white?: false)
-    pawn = Pawn.create(position:'A2', white?: true)
+    cell1 = Cell.find_by(position: 'B3')
+    cell1.change_occupied_mode
+    cell2 = Cell.find_by(position: 'A3')
+    cell2.change_occupied_mode
+    pawn = Pawn.find_by(position:'A2', white?: true)
+    Pawn.create(position:'B3', white?: false)
     player.move pawn, 'B3'
     expect(pawn.position).to eq 'B3'
   end
